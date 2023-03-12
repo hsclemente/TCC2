@@ -1,0 +1,112 @@
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.menu-principal {
+    width: 100%;
+    background-color: darkorange;
+    height: 60px;
+    display: flex;
+    border-bottom: 2px solid #242424;
+}
+
+.header-1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.logo img {
+    width: 40%;
+}
+
+.redes-sociais img {
+    width: 35px;
+
+}
+
+.redes-sociais ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.redes-sociais ul li {
+    padding: 0 10px;
+    list-style-type: none;
+}
+
+.header-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.menu ul li {
+    display: inline-block;
+    color: darkorange;
+    margin-left: 15px;
+}
+
+.menu ul li:nth-child(1) {
+    margin-left: 0px;
+}
+
+.menu ul li a {
+    color: darkorange;
+    text-decoration: none;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    border-bottom: 1px solid white;
+}
+
+.menu ul li:hover {
+    border-bottom: 1px solid black;
+}
+
+.menu ul li a:hover {
+    color: black;
+}
+
+.busca input {
+    background-image: url('../img/search\ grosso.png');
+    background-repeat: no-repeat;
+    height: 36px;
+    padding: 16px;
+    width: 250px;
+    background-size: 8%;
+    background-position: 95%;
+}
+
+.busca input img {
+    width: 35px;
+
+}
+
+.skick-track {
+    width: 100% !important;
+    transform: unset !important;
+}
+
+/*.slider-principal img{
+    width: 100%;
+
+}*/
+
+.swiper-slide img{
+    height: 400px;
+    width: 100%;
+}
