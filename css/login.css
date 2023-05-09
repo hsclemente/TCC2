@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(45deg, orange, darkorange);
+
+}
+
+.tela-login {
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 80px;
+    border-radius: 15px;
+    color: white;
+}
+
+input {
+    padding: 15px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+.btn-voltar {
+    text-align: start;
+    margin: 25px 0 0 25px;
+}
+
+.btn-voltar .voltar {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: transparent;
+    outline: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.voltar:hover {
+    background-color: darkorange;
+}
+
+.button-login {
+    background-color: darkorange;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+}
+
+.button-login:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: white;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.error {
+    color: red;
+    margin: 10px 0;
+    display: block;
+}

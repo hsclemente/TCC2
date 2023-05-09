@@ -2,17 +2,23 @@ body {
     width: 100%;
     height: 100%;
     margin: 0 auto;
+
+}
+
+object{
+    height: 70px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .menu-principal {
     width: 100%;
     background-color: darkorange;
-    height: 60px;
     display: flex;
-    border-bottom: 2px solid #242424;
+    padding: 5px 0;
 }
 
-.header-1 {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,9 +26,10 @@ body {
     width: 100%;
 }
 
-.logo img {
-    width: 40%;
+.logo {
+    display: inline-block;
 }
+
 
 .redes-sociais img {
     width: 35px;
@@ -31,12 +38,12 @@ body {
 
 .redes-sociais ul {
     display: flex;
+    gap: 5px;
     padding: 0;
     margin: 0;
 }
 
 .redes-sociais ul li {
-    padding: 0 10px;
     list-style-type: none;
 }
 
@@ -45,55 +52,27 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.menu ul {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
 }
 
 .menu ul li {
     display: inline-block;
     color: darkorange;
-    margin-left: 15px;
-}
-
-.menu ul li:nth-child(1) {
-    margin-left: 0px;
 }
 
 .menu ul li a {
-    color: darkorange;
+    color: white;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     text-transform: uppercase;
-}
-
-.menu ul {
-    margin: 0;
-    padding: 0;
-}
-
-.menu ul li {
-    border-bottom: 1px solid white;
-}
-
-.menu ul li:hover {
-    border-bottom: 1px solid black;
-}
-
-.menu ul li a:hover {
-    color: black;
-}
-
-.busca input {
-    background-image: url('../img/search\ grosso.png');
-    background-repeat: no-repeat;
-    height: 36px;
-    padding: 16px;
-    width: 250px;
-    background-size: 8%;
-    background-position: 95%;
-}
-
-.busca input img {
-    width: 35px;
-
 }
 
 .skick-track {
@@ -101,12 +80,253 @@ body {
     transform: unset !important;
 }
 
-/*.slider-principal img{
-    width: 100%;
-
-}*/
-
-.swiper-slide img{
+.swiper-slide img {
     height: 400px;
     width: 100%;
+}
+
+.bloco-logos {
+    height: 170px;
+}
+
+.footer h3 {
+    text-align: left;
+
+}
+
+.footer h3 {
+    text-align: left;
+    background-color: darkorange;
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2rem;
+}
+
+/* .texto-suporte {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2rem;
+} */
+
+.texto-suporte {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+.one,
+.two {
+    color: #333;
+}
+
+.texto-suporte p {
+    margin-bottom: 10px;
+}
+
+.one {
+    font-weight: bold;
+}
+
+.two {
+    font-style: italic;
+}
+
+.texto-suporte p:last-child {
+    margin-bottom: 20px;
+}
+
+.banner {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
+    height: 450px;
+}
+
+.funcoes {
+    margin-top: 50px;
+}
+
+.funcoes .titulo-principal .titulo {
+    font-size: 30px;
+    color: black;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.funcoes .titulo-principal .subtitulo {
+    font-size: 16px;
+    color: black;
+    line-height: 27px;
+}
+
+.funcoes .element {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.funcoes .element .imagem {
+    text-align: center;
+}
+
+.funcoes .element .wrap-titulo {
+    background-color: darkorange;
+    padding: 3px 0;
+    text-align: center;
+}
+
+.funcoes .element .titulo {
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    margin: 0;
+}
+
+.funcoes .element .descricao .texto {
+    font-size: 13px;
+    color: black;
+    line-height: 27px;
+}
+
+.teste .container-fluid {
+    padding: 0;
+}
+
+.teste .row {
+    width: 100%;
+}
+
+.menu-lateral {
+    width: 100%;
+    background-color: darkorange;
+    height: 600px;
+}
+
+.conteudo-adm {
+    background-color: black;
+    width: 100%;
+    height: 600px;
+}
+
+.footer {
+    width: 100%;
+    background-color: darkorange;
+    padding: 25px 0 5px 0;
+    margin-top: 40px;
+}
+
+.footer .informacoes-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+}
+
+.footer .informacoes-footer a {
+    font-size: small;
+    color: black;
+}
+
+.footer .logo {
+    text-align: center;
+    width: 100%;
+}
+
+.footer .redes-sociais ul {
+    justify-content: end;
+
+}
+
+.direitos-reservados {
+    text-align: center;
+    font-size: 11px;
+    color: black;
+}
+
+
+
+
+
+
+
+.container-suporte {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+}
+
+.card {
+    background-color: darkorange;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 20px;
+    width: 45%;
+    margin-bottom: 20px;
+}
+
+.blue {
+    background-color: darkorange;
+    color: black;
+}
+
+.green {
+    background-color: darkorange;
+    color: black;
+}
+
+.orange {
+    background-color: darkorange;
+    /* Definindo a cor de fundo laranja */
+    color: #fff;
+}
+
+.one {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.two {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.menu-lateral a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    background-color: orange;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.menu-lateral a:hover {
+    background-color: black;
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.saldo-financeiro {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    margin-top: 0px;
+}
+
+.saldo-financeiro h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.saldo-financeiro p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.saldo-financeiro button {
+    font-size: 18px;
 }
