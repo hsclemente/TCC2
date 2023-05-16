@@ -74,7 +74,53 @@
                 </div>
                 <div class="col-md-10">
                     <div class="conteudo-adm">
+                        <div class="faq">
+                            <h2>FAQ</h2>
+                            <div id="accordion">
+                                <!-- Aqui é onde as perguntas e respostas serão exibidas -->
+                            </div>
+                        </div>
 
+                        <script>
+                            // Aqui é onde você pode fazer uma solicitação AJAX para buscar as perguntas e respostas do banco de dados.
+                            // Supondo que as perguntas e respostas sejam retornadas em formato JSON, você pode usá-las para preencher a lista abaixo.
+                            var faq = [
+                                {
+                                    question: "Qual é a sua política de reembolso?",
+                                    answer: "Nós oferecemos reembolso total para qualquer compra dentro de 30 dias da data de compra."
+                                },
+                                {
+                                    question: "Quais métodos de pagamento vocês aceitam?",
+                                    answer: "Nós aceitamos cartões de crédito e PayPal."
+                                },
+                                {
+                                    question: "Qual é o tempo de resposta do suporte?",
+                                    answer: "Nós nos esforçamos para responder a todas as solicitações de suporte dentro de 24 horas úteis."
+                                }
+                            ];
+
+                            // Itera sobre a matriz faq e adiciona cada pergunta e resposta ao HTML.
+                            faq.forEach(function (item, index) {
+                                var html = `
+                                <div class="card">
+                                  <div class="card-header" id="heading${index}">
+                                    <h5 class="mb-0">
+                                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${index}" aria-expanded="true" aria-controls="collapse${index}">
+                                        ${item.question}
+                                      </button>
+                                    </h5>
+                                  </div>
+                          
+                                  <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordion">
+                                    <div class="card-body">
+                                      ${item.answer}
+                                    </div>
+                                  </div>
+                                </div>
+                              `;
+                                document.querySelector("#accordion").innerHTML += html;
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

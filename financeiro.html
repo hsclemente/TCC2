@@ -13,6 +13,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
+
+    <script>
+        function abrirPopup() {
+            document.getElementById('popup').classList.add('display-flex');
+        }
+
+        function adicionarSaldo() {
+            var formvalido = true;
+            var api = '';
+
+            var saldo = document.getElementById('saldo').innerText;
+            var valor = document.getElementById('valor').innerText;
+            var userCheckbox = document.getElementById('usuario-checkbox');
+            
+            if(userCheckbox.checked){
+                api = 'usuario/id';
+            }
+
+            if (formvalido){
+                popup.classList.remove('display-flex');
+            /*  fetch("http://localhost:8080/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    username: inputUsername,
+                    password: inputPassword,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    document.getElementById('Error').textContent='Usuário ou senha inválido.';             
+                }
+            }).then(data => {
+                localStorage.setItem('token', data.token);
+                window.location.href = './perfil.html';
+            }) */
+            }
+           
+        }
+    </script>
 </head>
 
 <body>
@@ -76,15 +119,71 @@
                     <div class="conteudo-adm">
                         <div class="saldo-financeiro">
                             <h2>Saldo Financeiro</h2>
-                            <p>Seu saldo atual é R$ 0,00</p>
-                            <button class="btn btn-primary">Adicionar saldo</button>
+                            <p>Seu saldo atual é R$ <span id="saldo">0,00</span></p>
+                            <!-- <p>Saldo atual da banda é R$ <span id="bandaSaldo">0,00</span></p> -->
+
+                            <button class="btn btn-primary" onclick="abrirPopup()">Adicionar saldo</button>
                             <button class="btn btn-primary">Remover saldo</button>
+                        </div>
+                        <div class="conteudo-adm">
+                            <h2>Operações</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Status Operação</th>
+                                        <th>Valor</th>
+                                        <th>Coluna 3</th>
+                                        <th>Coluna 4</th>
+                                        <th>Coluna 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Valor 1</td>
+                                        <td>Valor 2</td>
+                                        <td>Valor 3</td>
+                                        <td>Valor 4</td>
+                                        <td>Valor 5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Valor 4</td>
+                                        <td>Valor 5</td>
+                                        <td>Valor 6</td>
+                                        <td>Valor 6</td>
+                                        <td>Valor 6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Valor 7</td>
+                                        <td>Valor 8</td>
+                                        <td>Valor 9</td>
+                                        <td>Valor 6</td>
+                                        <td>Valor 6</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-box">
+            <h2 class="popup-title">Informe o saldo à adicionar:</h2>
+            <form>
+                <input type="text" class="price-input" id="valor">
+                <input type="radio" id="banda-checkbox" name="opcao" value="banda">
+                <label for="banda-checkbox">Banda</label>
+
+                <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
+                <label for="usuario-checkbox">Usuário</label>
+                <input type="submit" class="submit-popup-button" onclick="adicionarSaldo()" value="Enviar">
+            </form>
+            <p class="price-form-error error-msg"></p>
+        </div>
+    </div>
+
 </body>
 
 </html>

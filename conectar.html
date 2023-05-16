@@ -28,8 +28,9 @@
                     document.getElementById('Error').textContent='Usuário ou senha inválido.';             
                 }
             }).then(data => {
+                console.log(data)
                 localStorage.setItem('token', data.token);
-                window.location.href = './perfil.html';
+                // window.location.href = './perfil.html';
             })
         }
     </script>
