@@ -5,7 +5,7 @@ body {
 
 }
 
-object{
+object {
     height: 70px;
     width: 100%;
     overflow: hidden;
@@ -202,7 +202,7 @@ object{
 }
 
 .conteudo-adm {
-    background-color: black;
+    background-color: white;
     width: 100%;
     height: 600px;
 }
@@ -329,4 +329,93 @@ object{
 
 .saldo-financeiro button {
     font-size: 18px;
+}
+
+
+.popup {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.popup .popup-box {
+    border: 2px solid #000;
+    max-width: 400px;
+    width: 80%;
+    height: auto;
+    position: relative;
+    margin: 20px auto;
+    padding: 2rem;
+    background-color: darkorange;
+    border-radius: 10px; /* Altere o valor conforme necessário para ajustar o arredondamento dos cantos */
+  }
+
+.popup .popup-box::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+  }
+
+.popup .popup-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup .popup-box form .checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.popup .popup-box form .checkbox-container input[type="radio"] {
+    margin-right: 5px;
+}
+
+.popup .popup-box .popup-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--title-and-item-color);
+}
+
+.popup .popup-box form .price-input {
+    width: 70%;
+    padding: .5rem;
+    border: none;
+    border-radius: .4rem;
+    color: var(--main-color);
+}
+
+.popup .popup-box form .submit-popup-button {
+    width: 20%;
+    padding: .5rem;
+    margin-left: 1rem;
+    border-radius: .4rem;
+    border: 1px solid var(--title-and-item-color);
+    color: var(--title-and-item-color);
+    background-color: var(--popup-button-bg);
+    transition: .5s;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 1000;
+}
+
+.popup .popup-box form .submit-popup-button:hover {
+    background-color: orange;
+}
+
+.display-flex {
+    display: flex;
 }

@@ -170,19 +170,23 @@
 
     <div id="popup" class="popup">
         <div class="popup-box">
-            <h2 class="popup-title">Informe o saldo à adicionar:</h2>
-            <form>
-                <input type="text" class="price-input" id="valor">
-                <input type="radio" id="banda-checkbox" name="opcao" value="banda">
-                <label for="banda-checkbox">Banda</label>
-
-                <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
-                <label for="usuario-checkbox">Usuário</label>
-                <input type="submit" class="submit-popup-button" onclick="adicionarSaldo()" value="Enviar">
-            </form>
-            <p class="price-form-error error-msg"></p>
+          <h2 class="popup-title">Informe o saldo a adicionar:</h2>
+          <form>
+            <input type="text" class="price-input" id="valor">
+            <div class="checkbox-container">
+              <input type="radio" id="banda-checkbox" name="opcao" value="banda">
+              <label for="banda-checkbox">Banda</label>
+            </div>
+            <div class="checkbox-container">
+              <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
+              <label for="usuario-checkbox">Usuário</label>
+            </div>
+            <input type="submit" class="submit-popup-button" onclick="adicionarSaldo()" value="Enviar">
+          </form>
+          <p class="price-form-error error-msg"></p>
         </div>
-    </div>
+      </div>
+      
 
 </body>
 
