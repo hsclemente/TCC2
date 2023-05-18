@@ -419,3 +419,37 @@ object {
 .display-flex {
     display: flex;
 }
+
+#agendamento {
+    padding: 20px;
+    background-color: #f1f1f1;
+}
+
+#agendamento h2 {
+    margin-bottom: 10px;
+}
+
+#agendamento form {
+    margin-bottom: 20px;
+}
+
+#agendamento label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#agendamento input[type="date"],
+#agendamento input[type="time"],
+#agendamento textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#agendamento button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}

@@ -74,7 +74,74 @@
                 </div>
                 <div class="col-md-10">
                     <div class="conteudo-adm">
+                        <div id="agendamento">
+                            <h2>Agendar Compromisso</h2>
+                            <form>
+                                <label for="data">Data:</label>
+                                <input type="date" id="data" name="data" required>
 
+                                <label for="hora">Hora:</label>
+                                <input type="time" id="hora" name="hora" required>
+
+                                <label for="descricao">Descrição:</label>
+                                <textarea id="descricao" name="descricao" required></textarea>
+
+                                <button type="submit">Agendar</button>
+                                <ul id="lista-compromissos"></ul>
+                            </form>
+
+                            <script>
+                                // Função para comparar datas e horas
+                                function compareDates(a, b) {
+                                    var dateA = new Date(a.data + 'T' + a.hora);
+                                    var dateB = new Date(b.data + 'T' + b.hora);
+                                    return dateA - dateB;
+                                }
+                            
+                                // Captura o formulário quando o botão "Agendar" for clicado
+                                document.querySelector('form').addEventListener('submit', function (event) {
+                                    event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+                            
+                                    // Captura os valores dos campos do formulário
+                                    var data = document.getElementById('data').value;
+                                    var hora = document.getElementById('hora').value;
+                                    var descricao = document.getElementById('descricao').value;
+                            
+                                    // Cria um objeto com os dados do compromisso
+                                    var compromisso = {
+                                        data: data,
+                                        hora: hora,
+                                        descricao: descricao
+                                    };
+                            
+                                    // Adiciona o novo compromisso à lista de compromissos
+                                    var listaCompromissos = document.getElementById('lista-compromissos');
+                                    listaCompromissos.appendChild(createListItem(compromisso));
+                            
+                                    // Ordena a lista de compromissos
+                                    var compromissos = Array.from(listaCompromissos.children);
+                                    compromissos.sort(compareDates);
+                                    compromissos.forEach(function (item) {
+                                        listaCompromissos.appendChild(item);
+                                    });
+                            
+                                    // Limpa os campos do formulário
+                                    document.getElementById('data').value = '';
+                                    document.getElementById('hora').value = '';
+                                    document.getElementById('descricao').value = '';
+                                });
+                            
+                                // Função para criar um novo item de lista
+                                function createListItem(compromisso) {
+                                    var listItem = document.createElement('li');
+                                    listItem.textContent = compromisso.data + ' às ' + compromisso.hora + ': ' + compromisso.descricao;
+                                    return listItem;
+                                }
+                            </script>
+                            
+                            
+
+                        </div>
                     </div>
                 </div>
             </div>

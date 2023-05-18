@@ -12,6 +12,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <title>Meu TCC 2</title>
 </head>
 
@@ -74,8 +77,35 @@
                 </div>
                 <div class="col-md-10">
                     <div class="conteudo-adm">
-
+                        <canvas id="myChart"></canvas>
                     </div>
+                    <script>
+                        // Obtém o elemento canvas pelo id
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        
+                        // Cria o gráfico
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                datasets: [{
+                                    label: 'Shows Executados',
+                                    data: [6, 5, 2, 4, 3, 3, 2, 0, 0, 0, 0, 0],
+                                    backgroundColor: '#FF8C00', 
+                                    borderColor: '#FF8C00', 
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    
                 </div>
             </div>
         </div>
