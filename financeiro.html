@@ -15,45 +15,103 @@
     <title>Meu TCC 2</title>
 
     <script>
-        function abrirPopup() {
-            document.getElementById('popup').classList.add('display-flex');
+        function setUsuarioSaldo(valor) {
+            
         }
 
-        function adicionarSaldo() {
-            var formvalido = true;
-            var api = '';
+        function abrirPopupAdicionar() {
+            document.getElementById('popupAdicionar').classList.add('display-flex');
+        }
 
-            var saldo = document.getElementById('saldo').innerText;
-            var valor = document.getElementById('valor').innerText;
-            var userCheckbox = document.getElementById('usuario-checkbox');
+        function abrirPopupRemover() {
+            document.getElementById('popupRemover').classList.add('display-flex');
+        }
+
+        function transformaNumerico(valor) {
+            valor = valor.replace(',', '.');
+            var numero = Number(valor);
+            if (isNaN(numero)) {
+                throw new Error("O valor não é numérico");
+            }
+            return numero;
+        }
+
+        function setPopupErrors(message) {
+            document.getElementById('alterar-saldo-erro').innerText = message;
+            document.getElementById('remover-saldo-erro').innerText = message;
+        }
+        
+        function closePopup() {
+            document.getElementById('popupAdicionar').classList.remove('display-flex');
+            document.getElementById('popupRemover').classList.remove('display-flex');
+        }
+
+        function alterarSaldo(operacao) {
+            var saldo = document.getElementById('usuarioSaldo').innerText;
             
-            if(userCheckbox.checked){
-                api = 'usuario/id';
+            if (operacao === 'ADICIONAR') {
+                var valorMudar = document.getElementById('valor').value;
+                var userCheckbox = document.getElementById('usuario-checkbox');
+            } else {
+                var valorMudar = document.getElementById('valorRemover').value;
+                var userCheckbox = document.getElementById('usuario-checkbox-remover');
             }
 
-            if (formvalido){
-                popup.classList.remove('display-flex');
-            /*  fetch("http://localhost:8080/login", {
-                method: "POST",
+            if (valorMudar === '') {
+                setPopupErrors('Formulário invalido.')
+                return;
+            }
+
+            try {
+                saldo = transformaNumerico(saldo);
+                valorMudar = transformaNumerico(valorMudar);
+            } catch (error) {
+                setPopupErrors('Formulário invalido.')
+                return;
+            }
+            
+            if (valorMudar <= 0) {
+                setPopupErrors('Formulário invalido.')
+                return;
+            }
+            
+            if (userCheckbox.checked) {
+                api = 'usuario/' + localStorage.getItem('id');
+            } else {
+                api = 'banda/'  + localStorage.getItem('id');
+            }
+
+            if (operacao === 'ADICIONAR') {
+                valorFinal = saldo + valorMudar;
+            } else {
+                valorFinal = saldo - valorMudar;
+            }
+
+            setPopupErrors('');
+            closePopup();
+            console.log("http://localhost:8080/" + api)
+            console.log(valorFinal)
+            fetch("http://localhost:8080/" + api, {
+                method: "PATCH",
                 body: JSON.stringify({
-                    username: inputUsername,
-                    password: inputPassword,
+                    valor: valorFinal,
                 }),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
                 },
             }).then(response => {
+                console.log('chamamos')
                 if (response.ok) {
                     return response.json();
                 } else {
-                    document.getElementById('Error').textContent='Usuário ou senha inválido.';             
+                    setPopupErrors('Erro ao enviar formulário');
                 }
             }).then(data => {
-                localStorage.setItem('token', data.token);
-                window.location.href = './perfil.html';
-            }) */
-            }
-           
+                console.log(data)
+                // localStorage.setItem('token', data.token);
+                // window.location.href = './perfil.html';
+            })
         }
     </script>
 </head>
@@ -119,11 +177,11 @@
                     <div class="conteudo-adm">
                         <div class="saldo-financeiro">
                             <h2>Saldo Financeiro</h2>
-                            <p>Seu saldo atual é R$ <span id="saldo">0,00</span></p>
-                            <!-- <p>Saldo atual da banda é R$ <span id="bandaSaldo">0,00</span></p> -->
+                            <p>Seu saldo atual é R$ <span id="usuarioSaldo">0,00</span></p>
+                            <p>Saldo atual da banda é R$ <span id="bandaSaldo">0,00</span></p>
 
-                            <button class="btn btn-primary" onclick="abrirPopup()">Adicionar saldo</button>
-                            <button class="btn btn-primary">Remover saldo</button>
+                            <button class="btn btn-primary" onclick="abrirPopupAdicionar()">Adicionar saldo</button>
+                            <button class="btn btn-primary" onclick="abrirPopupRemover()">Remover saldo</button>
                         </div>
                         <div class="conteudo-adm">
                             <h2>Operações</h2>
@@ -168,25 +226,46 @@
         </div>
     </div>
 
-    <div id="popup" class="popup">
-        <div class="popup-box">
-          <h2 class="popup-title">Informe o saldo a adicionar:</h2>
-          <form>
-            <input type="text" class="price-input" id="valor">
-            <div class="checkbox-container">
-              <input type="radio" id="banda-checkbox" name="opcao" value="banda">
-              <label for="banda-checkbox">Banda</label>
-            </div>
-            <div class="checkbox-container">
-              <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
-              <label for="usuario-checkbox">Usuário</label>
-            </div>
-            <input type="submit" class="submit-popup-button" onclick="adicionarSaldo()" value="Enviar">
-          </form>
-          <p class="price-form-error error-msg"></p>
+    <div id="popupAdicionar" class="popup">
+        <div class="popup-box text-center">
+            <h2 class="popup-title">Informe o saldo a adicionar:</h2>
+            <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
+                <input type="text" class="price-input" id="valor">
+                <div class="checkbox-container">
+                    <input type="radio" name="opcao" value="banda">
+                    <label for="banda-checkbox">Banda</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
+                    <label for="usuario-checkbox">Usuário</label>
+                </div>
+                <button class="submit-popup-button" onclick="alterarSaldo('ADICIONAR')">Enviar</button>
+            </form>
+            <small id="alterar-saldo-erro" class="error color-red"></small>
+            <p class="price-form-error error-msg"></p>
         </div>
-      </div>
-      
+    </div>
+
+    <div id="popupRemover" class="popup">
+        <div class="popup-box text-center">
+            <h2 class="popup-title">Informe o saldo a remover:</h2>
+            <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
+                <input type="text" class="price-input" id="valorRemover">
+                <div class="checkbox-container">
+                    <input type="radio" name="opcao" value="banda">
+                    <label for="banda-checkbox">Banda</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="radio" id="usuario-checkbox-remover" name="opcao" value="usuario" checked>
+                    <label for="usuario-checkbox">Usuário</label>
+                </div>
+                <button class="submit-popup-button" onclick="alterarSaldo('REMOVER')">Enviar</button>
+            </form>
+            <small id="remover-saldo-erro" class="error color-red"></small>
+            <p class="price-form-error error-msg"></p>
+        </div>
+    </div>
+
 
 </body>
 
