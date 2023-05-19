@@ -453,3 +453,11 @@ object {
     border: none;
     cursor: pointer;
 }
+
+.color-red {
+    color: red;
+}
+
+.text-center {
+    text-align: center;
+}

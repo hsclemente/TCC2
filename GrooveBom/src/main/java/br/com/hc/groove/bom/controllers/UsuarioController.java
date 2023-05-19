@@ -64,7 +64,6 @@ public class UsuarioController {
     @PatchMapping("{id}")
     public ResponseEntity<?> alterarSaldo(@RequestBody@Valid SaldoForm saldo, @PathVariable("id") Long usuarioId) {
         return ResponseEntity.ok(usuarioService.alterarSaldo(saldo, usuarioId));
-
     }
 
     @DeleteMapping("{id}")
