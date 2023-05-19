@@ -47,7 +47,6 @@
         }
 
         function alterarSaldo(operacao) {
-            var saldo = document.getElementById('usuarioSaldo').innerText;
             
             if (operacao === 'ADICIONAR') {
                 var valorMudar = document.getElementById('valor').value;
@@ -56,6 +55,15 @@
                 var valorMudar = document.getElementById('valorRemover').value;
                 var userCheckbox = document.getElementById('usuario-checkbox-remover');
             }
+            
+            if (userCheckbox.checked) {
+                var saldo = document.getElementById('usuarioSaldo').innerText;
+                api = 'usuario/' + localStorage.getItem('id');
+            } else {
+                var saldo = document.getElementById('bandaSaldo').innerText;
+                api = 'banda/'  + localStorage.getItem('id');
+            }
+
 
             if (valorMudar === '') {
                 setPopupErrors('Formulário invalido.')
@@ -75,11 +83,6 @@
                 return;
             }
             
-            if (userCheckbox.checked) {
-                api = 'usuario/' + localStorage.getItem('id');
-            } else {
-                api = 'banda/'  + localStorage.getItem('id');
-            }
 
             if (operacao === 'ADICIONAR') {
                 valorFinal = saldo + valorMudar;
