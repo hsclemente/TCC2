@@ -23,14 +23,14 @@
         <div class="container">
             <div class="header">
                 <div class="logo">
-                    <img src="./img/logo-grooveBom.png" />
+                    <a href="index.html">
+                        <img src="./img/logo-grooveBom.png" />
+                    </a>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="sobre.html">Sobre Nós</a></li>
-                        <li><a href="conectar.html">Conectar</a></li>
-                        <li><a href="suporte.html">Suporte</a></li>
+                        <li><a href="perfil.html" style="color: black;">Usuário</a></li>
+                        <li><a href="banda.html">Banda</a></li>
                     </ul>
                 </div>
                 <div class="redes-sociais">
@@ -62,7 +62,7 @@
         </div>
 
     </header>
-    <div class="teste">
+    <div class="tabela-financeiro">
         <div class="container-fluid">
             <div class="row no-gutters">
                 <div class="col-md-2">
@@ -87,10 +87,10 @@
                         var myChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                                labels: ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'],
                                 datasets: [{
                                     label: 'Shows Executados',
-                                    data: [6, 5, 2, 4, 3, 3, 2, 0, 0, 0, 0, 0],
+                                    data: [6, 5, 2, 4, 3, 0, 0, 0, 0, 0, 0, 0],
                                     backgroundColor: '#FF8C00', 
                                     borderColor: '#FF8C00', 
                                     borderWidth: 1

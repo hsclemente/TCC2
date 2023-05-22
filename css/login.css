@@ -41,21 +41,6 @@ input {
     background-color: darkorange;
 }
 
-.button-login {
-    background-color: darkorange;
-    border: none;
-    padding: 15px;
-    border-radius: 10px;
-    color: white;
-    font-size: 15px;
-    width: 100%;
-}
-
-.button-login:hover {
-    background-color: orange;
-    cursor: pointer;
-}
-
 .forgot-password {
     text-align: center;
     margin-top: 10px;

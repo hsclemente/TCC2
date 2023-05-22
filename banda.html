@@ -12,6 +12,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <title>Meu TCC 2</title>
 </head>
 
@@ -20,14 +23,14 @@
         <div class="container">
             <div class="header">
                 <div class="logo">
-                    <a href="perfil.html">
+                    <a href="index.html">
                         <img src="./img/logo-grooveBom.png" />
                     </a>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="perfil.html" style="color: black;">Usuário</a></li>
-                        <li><a href="banda.html">Banda</a></li>
+                        <li><a href="perfil.html">Usuário</a></li>
+                        <li><a href="banda.html" style="color: black;">Banda</a></li>
                     </ul>
                 </div>
                 <div class="redes-sociais">
@@ -65,17 +68,45 @@
                 <div class="col-md-2">
                     <div class="menu-lateral">
                         <ul class="list-unstyled">
-                            <li><a href="financeiro.html"><span>Financeiro</span></a></li>
-                            <li><a href="tarefas.html"><span>Gestão de Tarefas</span></a></li>
-                            <li><a href="compromissos.html"><span>Gestão de Compromissos</span></a></li>
-                            <li><a href="faq.html"><span>FAQ</span></a></li>
+                            <li><a href="NovaBanda.html"><span>Criar Banda</span></a></li>
+                            <li><a href="integrantesBanda.htm"><span>Integrantes</span></a></li>
+                            <li><a href="financeiroBanda.html"><span>Financeiro</span></a></li>
+                            <li><a href="tarefasBanda.html"><span>Gestão de Tarefas</span></a></li>
+                            <li><a href="compromissosBanda.html"><span>Gestão de Compromissos</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-10">
                     <div class="conteudo-adm">
-
+                        <canvas id="myChart" style="width: 50%;"></canvas>
                     </div>
+                    <script>
+                        // Obtém o elemento canvas pelo id
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        
+                        // Cria o gráfico
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'],
+                                datasets: [{
+                                    label: 'Shows Executados',
+                                    data: [6, 5, 2, 4, 3, 0, 0, 0, 0, 0, 0, 0],
+                                    backgroundColor: '#FF8C00', 
+                                    borderColor: '#FF8C00', 
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    
                 </div>
             </div>
         </div>
