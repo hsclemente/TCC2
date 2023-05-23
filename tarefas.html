@@ -74,7 +74,59 @@
                 </div>
                 <div class="col-md-10">
                     <div class="conteudo-adm">
-
+                        <div class="gestao-tarefas">
+                            <h1>Gestão de Tarefas</h1>
+                            <form id="form-tarefa">
+                                <input type="text" id="input-tarefa" placeholder="Digite uma nova tarefa">
+                                <input type="text" id="input-descricao" placeholder="Descrição">
+                                <input type="date" id="input-data">
+                                <button type="submit">Adicionar</button>
+                            </form>
+                            <div id="lista-tarefas">
+                                <!-- Tarefas adicionadas dinamicamente serão exibidas aqui -->
+                            </div>
+                        </div>
+                        
+                        <script>
+                            const formTarefa = document.getElementById('form-tarefa');
+                            const inputTarefa = document.getElementById('input-tarefa');
+                            const inputDescricao = document.getElementById('input-descricao');
+                            const inputData = document.getElementById('input-data');
+                            const listaTarefas = document.getElementById('lista-tarefas');
+                        
+                            formTarefa.addEventListener('submit', function (event) {
+                                event.preventDefault();
+                        
+                                const novaTarefa = inputTarefa.value;
+                                const descricao = inputDescricao.value;
+                                const data = inputData.value;
+                                
+                                if (novaTarefa.trim() !== '') {
+                                    const card = document.createElement('div');
+                                    card.classList.add('tarefa-card');
+                                    
+                                    const titulo = document.createElement('h3');
+                                    titulo.textContent = novaTarefa;
+                                    
+                                    const descricaoParagrafo = document.createElement('p');
+                                    descricaoParagrafo.textContent = descricao;
+                                    
+                                    const dataParagrafo = document.createElement('p');
+                                    dataParagrafo.textContent = `Data: ${data}`;
+                                    
+                                    card.appendChild(titulo);
+                                    card.appendChild(descricaoParagrafo);
+                                    card.appendChild(dataParagrafo);
+                                    
+                                    listaTarefas.appendChild(card);
+                                    
+                                    inputTarefa.value = '';
+                                    inputDescricao.value = '';
+                                    inputData.value = '';
+                                }
+                            });
+                        </script>
+                        
                     </div>
                 </div>
             </div>

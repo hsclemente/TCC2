@@ -507,3 +507,65 @@ object {
     width: 50%;
 }
 
+
+
+/* Estilos para os cards de tarefas */
+.tarefa-card {
+    background-color: yellow;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tarefa-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .tarefa-card p {
+    margin: 0;
+  }
+  
+  /* Estilos para o formulário de adicionar tarefa */
+  #form-tarefa {
+    margin-bottom: 20px;
+  }
+  
+  #form-tarefa input[type="text"],
+  #form-tarefa input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid darkorange;
+    border-radius: 5px;
+  }
+  
+  #form-tarefa button {
+    background-color: darkorange;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #form-tarefa button:hover {
+    background-color: orange;
+  }
+  
+  /* Afasta o conteúdo da gestão de tarefas do header */
+.gestao-tarefas {
+    margin-top: 0px;
+  }
+  
+  /* Afasta o conteúdo da gestão de tarefas da barra lateral esquerda */
+  .gestao-tarefas .menu-lateral {
+    margin-left: 20px;
+  }
+  
+  /* Adiciona espaçamento inferior aos cards de tarefas */
+  .tarefa-card {
+    margin-bottom: 20px;
+  }
+  
