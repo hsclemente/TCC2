@@ -305,9 +305,13 @@ object {
 }
 
 .menu-lateral a:hover {
-    background-color: black;
+    background-color: darkorange;
     transform: scale(1.05);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+}
+
+.menu-lateral li a:hover {
+    color: black
 }
 
 .saldo-financeiro {
@@ -479,6 +483,10 @@ object {
 .submit-popup-button {
     /* Outros estilos */
     margin-top: 10px;
+<<<<<<< HEAD
+    border: 1px solid black;
+=======
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
     /* Adiciona uma margem superior para separar do campo de descrição */
 }
 
@@ -511,7 +519,11 @@ object {
 
 /* Estilos para os cards de tarefas */
 .tarefa-card {
+<<<<<<< HEAD
+    background-color: orange;
+=======
     background-color: yellow;
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -568,4 +580,44 @@ object {
   .tarefa-card {
     margin-bottom: 20px;
   }
+<<<<<<< HEAD
   
+
+
+
+
+
+  .comentario {
+      margin-bottom: 20px;
+  }
+
+  .conteudo-comentario,
+  .conteudo-resposta {
+      background-color: #ccc;
+      padding: 10px;
+      border: 1px solid darkorange;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+  }
+
+  .conteudo-resposta {
+      margin-top: 10px;
+      margin-left: 20px;
+  }
+
+  .resposta textarea {
+      margin-bottom: 5px;
+  }
+
+
+
+  .description-input {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+=======
+  
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
