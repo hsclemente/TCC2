@@ -14,17 +14,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
 
+
+    <style>
+        .submit-popup-button {
+            border: 1px solid black;
+        }
+    </style>
     <script>
         function setUsuarioSaldo(valor) {
-            // fazer logica do main
+            // Fazer lógica do main
         }
 
         function abrirPopupAdicionar() {
-            document.getElementById('popupAdicionar').classList.add('display-flex');
+            document.getElementById('popupAdicionar').style.display = 'block';
         }
 
         function abrirPopupRemover() {
-            document.getElementById('popupRemover').classList.add('display-flex');
+            document.getElementById('popupRemover').style.display = 'block';
         }
 
         function transformaNumerico(valor) {
@@ -42,11 +48,20 @@
         }
 
         function closePopup() {
-            document.getElementById('popupAdicionar').classList.remove('display-flex');
-            document.getElementById('popupRemover').classList.remove('display-flex');
+            document.getElementById('popupAdicionar').style.display = 'none';
+            document.getElementById('popupRemover').style.display = 'none';
         }
 
         function alterarSaldo(operacao) {
+<<<<<<< HEAD
+            var valorMudar, api;
+
+            if (operacao === 'ADICIONAR') {
+                valorMudar = document.getElementById('valor').value;
+                api = 'usuario/' + localStorage.getItem('id');
+            } else {
+                valorMudar = document.getElementById('valorRemover').value;
+=======
 
             if (operacao === 'ADICIONAR') {
                 var valorMudar = document.getElementById('valor').value;
@@ -61,22 +76,49 @@
                 api = 'usuario/' + localStorage.getItem('id');
             } else {
                 var saldo = document.getElementById('bandaSaldo').innerText;
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
                 api = 'banda/' + localStorage.getItem('id');
             }
 
-
             if (valorMudar === '') {
-                setPopupErrors('Formulário invalido.')
+                setPopupErrors('Formulário inválido.');
                 return;
             }
 
             try {
+                var saldo = document.getElementById('usuarioSaldo').innerText;
                 saldo = transformaNumerico(saldo);
-                valorMudar = transformaNumerico(valorMudar);
+                var valorMudarNum = transformaNumerico(valorMudar);
+
+                if (valorMudarNum <= 0) {
+                    setPopupErrors('Formulário inválido.');
+                    return;
+                }
+
+                var valorFinal;
+                if (operacao === 'ADICIONAR') {
+                    valorFinal = saldo + valorMudarNum;
+                } else {
+                    valorFinal = saldo - valorMudarNum;
+                }
+
+                setPopupErrors('');
+                closePopup();
+                fetch("http://localhost:8080/" + api, {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        valor: valorFinal,
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                });
             } catch (error) {
-                setPopupErrors('Formulário invalido.')
-                return;
+                setPopupErrors('Formulário inválido.');
             }
+<<<<<<< HEAD
+=======
 
             if (valorMudar <= 0) {
                 setPopupErrors('Formulário invalido.')
@@ -102,6 +144,7 @@
                     "Authorization": "Bearer " + localStorage.getItem('token')
                 },
             })
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
         }
     </script>
 </head>
@@ -212,14 +255,18 @@
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <input type="text" class="price-input" id="valor">
                 <textarea class="descricao-input" id="descricaoAdicionar" placeholder="Incluir descrição"></textarea>
+<<<<<<< HEAD
+                <!-- <div class="checkbox-container">
+=======
                 <div class="checkbox-container">
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
                     <input type="radio" name="opcao" value="banda">
                     <label for="banda-checkbox">Banda</label>
                 </div>
                 <div class="checkbox-container">
                     <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
                     <label for="usuario-checkbox">Usuário</label>
-                </div>
+                </div> -->
                 <button class="submit-popup-button" onclick="alterarSaldo('ADICIONAR')">Enviar</button>
             </form>
             <small id="alterar-saldo-erro" class="error color-red"></small>
@@ -233,14 +280,18 @@
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <input type="text" class="price-input" id="valorRemover">
                 <textarea class="descricao-input" id="descricaoRemover" placeholder="Incluir descrição"></textarea>
+<<<<<<< HEAD
+                <!-- <div class="checkbox-container">
+=======
                 <div class="checkbox-container">
+>>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
                     <input type="radio" name="opcao" value="banda">
                     <label for="banda-checkbox">Banda</label>
                 </div>
                 <div class="checkbox-container">
                     <input type="radio" id="usuario-checkbox-remover" name="opcao" value="usuario" checked>
                     <label for="usuario-checkbox">Usuário</label>
-                </div>
+                </div> -->
                 <button class="submit-popup-button" onclick="alterarSaldo('REMOVER')">Enviar</button>
             </form>
             <small id="remover-saldo-erro" class="error color-red"></small>

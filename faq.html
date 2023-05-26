@@ -72,55 +72,133 @@
                         </ul>
                     </div>
                 </div>
+
+                <script>
+                    var palavrasProibidas = ['Aleijada',
+                        'aleijado',
+                        'arrombada',
+                        'arrombado',
+                        'abestado',
+                        'arregaçado',
+                        'babaca',
+                        'bosta',
+                        'burra',
+                        'burro',
+                        'boiola',
+                        'boiolinha',
+                        'besta',
+                        'broxa',
+                        'corna',
+                        'corno',
+                        ' cu ',
+                        'cuzão',
+                        'cuzona',
+                        'caralhudo',
+                        'caralho',
+                        'desgraçada',
+                        'desgraçado',
+                        'esquizofrênica',
+                        'esquizofrênico',
+                        'escroto',
+                        'foda',
+                        'fuck',
+                        'fudida',
+                        'fudido',
+                        'filho da puta',
+                        'fdp',
+                        'gay',
+                        'idiota',
+                        'imbecil',
+                        'merda',
+                        'monoteta',
+                        'otaria',
+                        'otária',
+                        'otario',
+                        'otário',
+                        'prostituta',
+                        'prostituto',
+                        'punheta',
+                        'puta',
+                        'putinha',
+                        'putão',
+                        'quenga',
+                        'rapariga',
+                        'traveco',
+                        'vadia',
+                        'vadio',
+                        'vagabunda',
+                        'vagabundo',
+                        'xana',
+                        'xibiu',
+                        'xavasca'];
+
+                    function adicionarComentario() {
+                        var comentario = document.getElementById('comentario').value;
+                        var comentariosContainer = document.getElementById('comentarios');
+
+                        var contemPalavraProibida = palavrasProibidas.some(function (palavra) {
+                            return comentario.includes(palavra);
+                        });
+
+                        if (contemPalavraProibida) {
+                            alert('O comentário contém palavras inapropriadas com as diretrizes do nosso programa. Por favor, revise seu comentário.');
+                            return;
+                        }
+
+                        var comentarioElement = document.createElement('div');
+                        comentarioElement.classList.add('comentario');
+                        comentarioElement.innerHTML = '<div class="conteudo-comentario principal">' +
+                            '<p>' + comentario + '</p>' +
+                            '<div class="respostas"></div>' +
+                            '<textarea class="resposta" rows="1" placeholder="Escreva uma resposta"></textarea>' +
+                            '<button class="btn btn-primary" onclick="adicionarResposta(this)">Responder</button>' +
+                            '</div>';
+
+                        comentariosContainer.appendChild(comentarioElement);
+
+                        document.getElementById('comentario').value = '';
+                    }
+
+                    function adicionarResposta(button) {
+                        var resposta = button.previousElementSibling.value;
+                        var respostaElement = document.createElement('div');
+                        respostaElement.classList.add('resposta');
+                        respostaElement.innerHTML = '<p>' + resposta + '</p>';
+
+                        var comentarioElement = button.parentElement;
+                        var respostasContainer = comentarioElement.querySelector('.respostas');
+
+                        var respostas = respostasContainer.querySelectorAll('.resposta');
+                        if (respostas.length === 0) {
+                            respostasContainer.appendChild(respostaElement);
+                            button.previousElementSibling.value = '';
+                            button.disabled = true;
+                        } else {
+                            alert('Já foi adicionada uma resposta para este comentário principal.');
+                        }
+                    }
+                </script>
+
                 <div class="col-md-10">
                     <div class="conteudo-adm">
-                        <div class="faq">
-                            <h2>FAQ</h2>
-                            <div id="accordion">
-                                <!-- Aqui é onde as perguntas e respostas serão exibidas -->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>FAQ</h2>
+                                    <div id="comentarios">
+                                        <!-- Aqui serão exibidos os comentários -->
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <textarea id="comentario" class="form-control" rows="3"
+                                                placeholder="Digite um comentário"></textarea>
+                                            <button onclick="adicionarComentario()"
+                                                class="btn btn-primary mt-2">Enviar</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <script>
-                            // Aqui é onde você pode fazer uma solicitação AJAX para buscar as perguntas e respostas do banco de dados.
-                            // Supondo que as perguntas e respostas sejam retornadas em formato JSON, você pode usá-las para preencher a lista abaixo.
-                            var faq = [
-                                {
-                                    question: "Qual é a sua política de reembolso?",
-                                    answer: "Nós oferecemos reembolso total para qualquer compra dentro de 30 dias da data de compra."
-                                },
-                                {
-                                    question: "Quais métodos de pagamento vocês aceitam?",
-                                    answer: "Nós aceitamos cartões de crédito e PayPal."
-                                },
-                                {
-                                    question: "Qual é o tempo de resposta do suporte?",
-                                    answer: "Nós nos esforçamos para responder a todas as solicitações de suporte dentro de 24 horas úteis."
-                                }
-                            ];
-
-                            // Itera sobre a matriz faq e adiciona cada pergunta e resposta ao HTML.
-                            faq.forEach(function (item, index) {
-                                var html = `
-                                <div class="card">
-                                  <div class="card-header" id="heading${index}">
-                                    <h5 class="mb-0">
-                                      <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${index}" aria-expanded="true" aria-controls="collapse${index}">
-                                        ${item.question}
-                                      </button>
-                                    </h5>
-                                  </div>
-                          
-                                  <div id="collapse${index}" class="collapse" aria-labelledby="heading${index}" data-parent="#accordion">
-                                    <div class="card-body">
-                                      ${item.answer}
-                                    </div>
-                                  </div>
-                                </div>
-                              `;
-                                document.querySelector("#accordion").innerHTML += html;
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
