@@ -25,13 +25,9 @@ public class Banda {
     @Column(name = "nome", nullable = true)
     private String nome;
 
-    @Column(name = "saldo", nullable = true)
-    private Double saldo;
-
     @PrePersist
     public void create() {
         this.id = null;
-        this.saldo = 0.00;
     }
 
     public Banda(BandaForm bandaForm) {

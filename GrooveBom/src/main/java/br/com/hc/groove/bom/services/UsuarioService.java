@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.hc.groove.bom.domain.models.dtos.UsuarioDTO;
 import br.com.hc.groove.bom.domain.models.entities.Usuario;
-import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.domain.models.forms.UsuarioForm;
 import br.com.hc.groove.bom.domain.repositories.BandaRepository;
 import br.com.hc.groove.bom.domain.repositories.UsuarioRepository;
@@ -50,15 +49,10 @@ public class UsuarioService {
         return "Usuario desativado com sucesso";
     }
 
-    public UsuarioDTO alterarSaldo(@Valid SaldoForm saldo, Long usuarioId) {
-        Usuario usuario = usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(EntityNotFoundException::new);
-        usuario.setSaldo(saldo.valor());
-        
-        return new UsuarioDTO(usuarioRepository.save(usuario));
-    }
-
     public String adicionarBanda(Long usuarioId, Long bandaId) {
-        usuarioRepository.UpdateBanda(usuarioId, bandaId);
+        Usuario usuario = usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(EntityNotFoundException::new);
+        usuario.setBanda(bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new));
+        usuarioRepository.save(usuario);
         return "Usuario adicionado à banda com sucesso";
     }
 

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.hc.groove.bom.domain.models.dtos.BandaDTO;
 import br.com.hc.groove.bom.domain.models.forms.BandaForm;
-import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.services.BandaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -45,8 +43,4 @@ public class BandaController {
         return ResponseEntity.ok(bandaService.alterarNome(banda, bandaId));
     }
 
-    @PatchMapping("{id}")
-    public ResponseEntity<?> alterarSaldo(@RequestBody @Valid SaldoForm saldo, @PathVariable("id") Long bandaId) {
-        return ResponseEntity.ok(bandaService.alterarSaldo(saldo, bandaId));
-    }
 }

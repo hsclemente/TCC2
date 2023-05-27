@@ -6,10 +6,9 @@ public record UsuarioDTO (
     String nome,
     String descricao,
     String especialidade,
-    String email,
-    Double saldo
+    String email
 ){
     public UsuarioDTO(Usuario usuario) {
-        this(usuario.getId(), usuario.getNome(), usuario.getDescricao(), usuario.getEspecialidade(), usuario.getEmail(), usuario.getSaldo());
+        this(usuario.getId(), usuario.getNome(), usuario.getDescricao(), usuario.getEspecialidade(), usuario.getEmail());
     } 
 }

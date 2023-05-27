@@ -483,10 +483,7 @@ object {
 .submit-popup-button {
     /* Outros estilos */
     margin-top: 10px;
-<<<<<<< HEAD
     border: 1px solid black;
-=======
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
     /* Adiciona uma margem superior para separar do campo de descrição */
 }
 
@@ -519,11 +516,7 @@ object {
 
 /* Estilos para os cards de tarefas */
 .tarefa-card {
-<<<<<<< HEAD
-    background-color: orange;
-=======
     background-color: yellow;
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -580,12 +573,6 @@ object {
   .tarefa-card {
     margin-bottom: 20px;
   }
-<<<<<<< HEAD
-  
-
-
-
-
 
   .comentario {
       margin-bottom: 20px;
@@ -618,6 +605,3 @@ object {
     width: 100%;
     box-sizing: border-box;
 }
-=======
-  
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6

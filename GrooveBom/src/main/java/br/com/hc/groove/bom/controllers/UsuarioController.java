@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.hc.groove.bom.domain.models.dtos.UsuarioDTO;
-import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.domain.models.forms.UsuarioForm;
 import br.com.hc.groove.bom.services.UsuarioService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -28,7 +27,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PatchMapping("{usuarioId}/banda/{bandaId}")// em fase de desenvolvimento
+    @PatchMapping("{usuarioId}/banda/{bandaId}")
     public ResponseEntity<?> adicionarBanda(@PathVariable("usuarioId") Long usuarioId, @PathVariable("bandaId") Long bandaId) {
         return ResponseEntity.ok(usuarioService.adicionarBanda(usuarioId, bandaId));
     }
@@ -59,11 +58,6 @@ public class UsuarioController {
     public ResponseEntity<?> alterarUsuario(@RequestBody UsuarioForm usuario, @PathVariable("id") Long usuarioId) {
         return ResponseEntity.ok(usuarioService.alterarUsuario(usuario, usuarioId));
 
-    }
-
-    @PatchMapping("{id}")
-    public ResponseEntity<?> alterarSaldo(@RequestBody@Valid SaldoForm saldo, @PathVariable("id") Long usuarioId) {
-        return ResponseEntity.ok(usuarioService.alterarSaldo(saldo, usuarioId));
     }
 
     @DeleteMapping("{id}")

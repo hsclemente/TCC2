@@ -53,16 +53,6 @@
         }
 
         function alterarSaldo(operacao) {
-<<<<<<< HEAD
-            var valorMudar, api;
-
-            if (operacao === 'ADICIONAR') {
-                valorMudar = document.getElementById('valor').value;
-                api = 'usuario/' + localStorage.getItem('id');
-            } else {
-                valorMudar = document.getElementById('valorRemover').value;
-=======
-
             if (operacao === 'ADICIONAR') {
                 var valorMudar = document.getElementById('valor').value;
                 var userCheckbox = document.getElementById('usuario-checkbox');
@@ -74,9 +64,6 @@
             if (userCheckbox.checked) {
                 var saldo = document.getElementById('usuarioSaldo').innerText;
                 api = 'usuario/' + localStorage.getItem('id');
-            } else {
-                var saldo = document.getElementById('bandaSaldo').innerText;
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
                 api = 'banda/' + localStorage.getItem('id');
             }
 
@@ -117,8 +104,6 @@
             } catch (error) {
                 setPopupErrors('Formulário inválido.');
             }
-<<<<<<< HEAD
-=======
 
             if (valorMudar <= 0) {
                 setPopupErrors('Formulário invalido.')
@@ -144,7 +129,6 @@
                     "Authorization": "Bearer " + localStorage.getItem('token')
                 },
             })
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
         }
     </script>
 </head>
@@ -255,18 +239,6 @@
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <input type="text" class="price-input" id="valor">
                 <textarea class="descricao-input" id="descricaoAdicionar" placeholder="Incluir descrição"></textarea>
-<<<<<<< HEAD
-                <!-- <div class="checkbox-container">
-=======
-                <div class="checkbox-container">
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
-                    <input type="radio" name="opcao" value="banda">
-                    <label for="banda-checkbox">Banda</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
-                    <label for="usuario-checkbox">Usuário</label>
-                </div> -->
                 <button class="submit-popup-button" onclick="alterarSaldo('ADICIONAR')">Enviar</button>
             </form>
             <small id="alterar-saldo-erro" class="error color-red"></small>
@@ -280,18 +252,6 @@
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <input type="text" class="price-input" id="valorRemover">
                 <textarea class="descricao-input" id="descricaoRemover" placeholder="Incluir descrição"></textarea>
-<<<<<<< HEAD
-                <!-- <div class="checkbox-container">
-=======
-                <div class="checkbox-container">
->>>>>>> aea48fb8a305750fa0de92a839b43902e7f79fb6
-                    <input type="radio" name="opcao" value="banda">
-                    <label for="banda-checkbox">Banda</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="radio" id="usuario-checkbox-remover" name="opcao" value="usuario" checked>
-                    <label for="usuario-checkbox">Usuário</label>
-                </div> -->
                 <button class="submit-popup-button" onclick="alterarSaldo('REMOVER')">Enviar</button>
             </form>
             <small id="remover-saldo-erro" class="error color-red"></small>

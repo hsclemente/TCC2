@@ -44,9 +44,6 @@ public class Usuario implements UserDetails {
     @Column(name = "email", nullable = true)
     private String email;
 
-    @Column(name = "saldo", nullable = true, columnDefinition = "DOUBLE PRECISION default 0.00")
-    private Double saldo;
-
     @Column(name = "ativo", nullable = true, columnDefinition = "BOOLEAN default true")
     private Boolean ativo;
 
@@ -61,7 +58,6 @@ public class Usuario implements UserDetails {
     public void create() {
         this.id = null;
         this.ativo = true;
-        this.saldo = 0.00;
     }
 
     public Usuario(UsuarioForm usuarioForm) {

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.hc.groove.bom.domain.models.dtos.BandaDTO;
 import br.com.hc.groove.bom.domain.models.entities.Banda;
 import br.com.hc.groove.bom.domain.models.forms.BandaForm;
-import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import br.com.hc.groove.bom.domain.repositories.BandaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -31,13 +30,6 @@ public class BandaService {
     public BandaDTO alterarNome(@Valid BandaForm bandaForm, Long bandaId) {
         Banda banda = bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new);
         banda.setNome(bandaForm.nome());
-        
-        return new BandaDTO(bandaRepository.save(banda));
-    }
-
-    public BandaDTO alterarSaldo(@Valid SaldoForm saldo, Long bandaId) {
-        Banda banda = bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new);
-        banda.setSaldo(saldo.valor());
         
         return new BandaDTO(bandaRepository.save(banda));
     }
