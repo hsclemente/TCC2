@@ -20,7 +20,7 @@ public class SaldoService {
         return saldoRepository.findAllByIdExterno(idExterno, paginacao).map(SaldoDTO::new);
     }
 
-    public SaldoDTO criarSaldo(@Valid SaldoForm form) {
-        return new SaldoDTO(saldoRepository.save(new Saldo(form)));
+    public Long criarSaldo(@Valid SaldoForm form) {
+        return saldoRepository.save(new Saldo(form)).getId();
     }
 }

@@ -1,10 +1,14 @@
 package br.com.hc.groove.bom.domain.models.entities;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 import br.com.hc.groove.bom.domain.models.forms.SaldoForm;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +37,12 @@ public class Saldo {
     @Column(name = "data_movimentacao")
     private LocalDateTime data;
 
+    @Column(name = "valor", nullable = false)
+    private Double valor;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @PrePersist
     void create() {
         this.data = LocalDateTime.now();
@@ -40,6 +50,8 @@ public class Saldo {
 
     public Saldo(SaldoForm saldoForm) {
         this.descricao = saldoForm.descricao();
+        this.status = saldoForm.status();
+        this.valor = BigDecimal.valueOf(saldoForm.valor()).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.idExterno = saldoForm.idExterno();
     }
 }

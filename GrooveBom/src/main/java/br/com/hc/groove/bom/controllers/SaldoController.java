@@ -36,7 +36,7 @@ public class SaldoController {
 
     @PostMapping
     public ResponseEntity<?> criarSaldo(@RequestBody@Valid SaldoForm form, UriComponentsBuilder uriBuilder) {
-        SaldoDTO saldoDTO = saldoService.criarSaldo(form);
-        return ResponseEntity.created(uriBuilder.path("/saldo/{id}").buildAndExpand(saldoDTO.id()).toUri()).body(saldoDTO);
+        Long id = saldoService.criarSaldo(form);
+        return ResponseEntity.created(uriBuilder.path("/saldo/{id}").buildAndExpand(id).toUri()).body(id);
     }
 }

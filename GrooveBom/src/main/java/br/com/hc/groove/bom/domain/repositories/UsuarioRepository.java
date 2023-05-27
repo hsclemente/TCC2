@@ -8,7 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.hc.groove.bom.domain.models.entities.Banda;
 import br.com.hc.groove.bom.domain.models.entities.Usuario;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByIdAndAtivoIsTrue(Long id);
 

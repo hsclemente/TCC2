@@ -460,14 +460,6 @@ object {
     cursor: pointer;
 }
 
-.color-red {
-    color: red;
-}
-
-.text-center {
-    text-align: center;
-}
-
 .titulo-operacoes {
     margin: 20px 0 20px 20px;
 }
@@ -596,12 +588,34 @@ object {
       margin-bottom: 5px;
   }
 
-
-
   .description-input {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  .w-60 {
+    width: 60%;
+  }
+
+  .w-100 {
+    width: 100%;
+  }
+
+  .float-left {
+    float: left;
+  }
+
+  .mb-2 {
+    margin-bottom: 1rem;
+  } 
+
+  .color-red {
+    color: red;
+}
+
+.text-center {
+    text-align: center;
 }

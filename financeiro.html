@@ -21,8 +21,62 @@
         }
     </style>
     <script>
-        function setUsuarioSaldo(valor) {
-            // Fazer lógica do main
+        document.addEventListener('DOMContentLoaded', function () {
+            setUsuarioSaldo();
+        });
+
+        function setUsuarioSaldo() {
+            var tbody = document.getElementById('tbody');
+
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+
+            fetch("http://localhost:8080/saldo/" + localStorage.getItem('id'), {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                var saldo = 0;
+                console.log(data.content)
+                // var list = Object.entries(data);
+                var list = Object.keys(data.content).map((chave) => {
+                    var obj = data.content[chave]
+                    createLi(obj.status, obj.valor, obj.descricao)
+
+                    if (obj.status === 'ADICAO') {
+                        saldo += obj.valor;
+                    } else {
+                        saldo -= obj.valor;
+                    }
+                });;
+
+                document.getElementById('usuarioSaldo').innerText = saldo;
+            })
+        }
+
+        function createLi(status, valor, descricao) {
+            var table = document.getElementById('tbody');
+            const tr = document.createElement('tr');
+
+            const td1 = document.createElement('td');
+            td1.innerText = status;
+            
+            const td2 = document.createElement('td');
+            td2.innerText = valor;
+            
+            const td3 = document.createElement('td');
+            td3.innerText = descricao;
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+
+            table.appendChild(tr);
         }
 
         function abrirPopupAdicionar() {
@@ -52,22 +106,28 @@
             document.getElementById('popupRemover').style.display = 'none';
         }
 
+        function cleanPopup() {
+            setPopupErrors('')
+            document.getElementById('valorRemover').innerText = '';
+            document.getElementById('valor').innerHTML = '';
+            document.getElementById('descricaoRemover').innerText = '';
+            document.getElementById('descricaoAdicionar').innerText = '';
+        }
+
         function alterarSaldo(operacao) {
             if (operacao === 'ADICIONAR') {
                 var valorMudar = document.getElementById('valor').value;
-                var userCheckbox = document.getElementById('usuario-checkbox');
+                var status = 'ADICAO';
+                var descricao = document.getElementById("descricaoAdicionar").value;
             } else {
                 var valorMudar = document.getElementById('valorRemover').value;
-                var userCheckbox = document.getElementById('usuario-checkbox-remover');
+                var status = 'REMOCAO';
+                var descricao = document.getElementById("descricaoRemover").value;
             }
 
-            if (userCheckbox.checked) {
-                var saldo = document.getElementById('usuarioSaldo').innerText;
-                api = 'usuario/' + localStorage.getItem('id');
-                api = 'banda/' + localStorage.getItem('id');
-            }
+            var saldo = document.getElementById('usuarioSaldo').innerText;
 
-            if (valorMudar === '') {
+            if (valorMudar === '' || descricao === '') {
                 setPopupErrors('Formulário inválido.');
                 return;
             }
@@ -82,53 +142,26 @@
                     return;
                 }
 
-                var valorFinal;
-                if (operacao === 'ADICIONAR') {
-                    valorFinal = saldo + valorMudarNum;
-                } else {
-                    valorFinal = saldo - valorMudarNum;
-                }
-
-                setPopupErrors('');
                 closePopup();
-                fetch("http://localhost:8080/" + api, {
-                    method: "PATCH",
+                fetch("http://localhost:8080/saldo", {
+                    method: "POST",
                     body: JSON.stringify({
-                        valor: valorFinal,
+                        valor: valorMudarNum,
+                        descricao: descricao,
+                        idExterno: localStorage.getItem('id'),
+                        status: status
                     }),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8",
                         "Authorization": "Bearer " + localStorage.getItem('token')
                     },
+                }).then(data => {
+                    setUsuarioSaldo();
+                    cleanPopup();
                 });
             } catch (error) {
                 setPopupErrors('Formulário inválido.');
             }
-
-            if (valorMudar <= 0) {
-                setPopupErrors('Formulário invalido.')
-                return;
-            }
-
-
-            if (operacao === 'ADICIONAR') {
-                valorFinal = saldo + valorMudar;
-            } else {
-                valorFinal = saldo - valorMudar;
-            }
-
-            setPopupErrors('');
-            closePopup();
-            fetch("http://localhost:8080/" + api, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    valor: valorFinal,
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    "Authorization": "Bearer " + localStorage.getItem('token')
-                },
-            })
         }
     </script>
 </head>
@@ -208,22 +241,7 @@
                                         <th>Descrição</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Valor 1</td>
-                                        <td>Valor 2</td>
-                                        <td>Valor 3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Valor 1</td>
-                                        <td>Valor 2</td>
-                                        <td>Valor 3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Valor 1</td>
-                                        <td>Valor 2</td>
-                                        <td>Valor 3</td>
-                                    </tr>
+                                <tbody id="tbody">
                                 </tbody>
                             </table>
                         </div>
@@ -237,8 +255,12 @@
         <div class="popup-box text-center">
             <h2 class="popup-title">Informe o saldo a adicionar:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
-                <input type="text" class="price-input" id="valor">
+                <div class="w-100 mb-2">
+                    <label for="valor" class="float-left">Valor: </label>
+                    <input type="text" class="price-input w-60" id="valor">
+                </div>
                 <textarea class="descricao-input" id="descricaoAdicionar" placeholder="Incluir descrição"></textarea>
+                <small id="alterar-saldo-erro" class="error color-red"></small>
                 <button class="submit-popup-button" onclick="alterarSaldo('ADICIONAR')">Enviar</button>
             </form>
             <small id="alterar-saldo-erro" class="error color-red"></small>
@@ -250,8 +272,12 @@
         <div class="popup-box text-center">
             <h2 class="popup-title">Informe o saldo a remover:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
-                <input type="text" class="price-input" id="valorRemover">
+                <div class="w-100 mb-2">
+                    <label for="valor" class="float-left">Valor: </label>
+                    <input type="text" class="price-input" id="valorRemover">
+                </div>
                 <textarea class="descricao-input" id="descricaoRemover" placeholder="Incluir descrição"></textarea>
+                <small id="remover-saldo-erro" class="error color-red"></small>
                 <button class="submit-popup-button" onclick="alterarSaldo('REMOVER')">Enviar</button>
             </form>
             <small id="remover-saldo-erro" class="error color-red"></small>
