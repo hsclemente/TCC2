@@ -75,26 +75,46 @@
 
                 <script>
                     var palavrasProibidas = ['Aleijada',
+                        'aleijada',
                         'aleijado',
+                        'Aleijado',
                         'arrombada',
+                        'Arrombada',
                         'arrombado',
+                        'Arrombado',
                         'abestado',
                         'arregaçado',
+                        'arregaçada',
+                        'Arregaçado',
+                        'Arregaçada',
                         'babaca',
+                        'Babaca',
                         'bosta',
+                        'Bosta',
                         'burra',
+                        'Burra',
                         'burro',
+                        'Burro',
                         'boiola',
+                        'Boiola',
                         'boiolinha',
                         'besta',
                         'broxa',
                         'corna',
                         'corno',
+                        'cu ',
+                        'Cu ',
                         ' cu ',
+                        ' Cu ',
                         'cuzão',
+                        'cuzao',
+                        'Cuzão',
+                        'Cuzao',
                         'cuzona',
+                        'Cuzona',
                         'caralhudo',
                         'caralho',
+                        'Caralho',
                         'desgraçada',
                         'desgraçado',
                         'esquizofrênica',
@@ -147,11 +167,11 @@
 
                         var comentarioElement = document.createElement('div');
                         comentarioElement.classList.add('comentario');
-                        comentarioElement.innerHTML = '<div class="conteudo-comentario principal">' +
-                            '<p>' + comentario + '</p>' +
-                            '<div class="respostas"></div>' +
-                            '<textarea class="resposta" rows="1" placeholder="Escreva uma resposta"></textarea>' +
-                            '<button class="btn btn-primary" onclick="adicionarResposta(this)">Responder</button>' +
+                        comentarioElement.innerHTML = '<div class="conteudo-comentario principal">'
+                            + '<p class="usuario-pergunta">Henrique Clemente</p>' + '<p class="user-comment">' + comentario + '</p>' +
+                            '<div class="respostas"></div>' + '<div class="open-answer" id="open-answer" onclick="showAnswerBox(event)"><small class="responder-small">Responder</small></div>' +
+                            '<textarea class="resposta-campo" style="display: none" id="answer-box" rows="1" placeholder="Escreva uma resposta"></textarea>' +
+                            '<button class="btn-padrao" onclick="adicionarResposta(this)">Enviar</button>' +
                             '</div>';
 
                         comentariosContainer.appendChild(comentarioElement);
@@ -160,43 +180,43 @@
                     }
 
                     function adicionarResposta(button) {
+                        console.log(button)
                         var resposta = button.previousElementSibling.value;
                         var respostaElement = document.createElement('div');
                         respostaElement.classList.add('resposta');
-                        respostaElement.innerHTML = '<p>' + resposta + '</p>';
+                        respostaElement.innerHTML = '<p class="usuario-resposta">Felipe Zago</p><p class="user-comment">' + resposta + '</p>';
 
                         var comentarioElement = button.parentElement;
                         var respostasContainer = comentarioElement.querySelector('.respostas');
 
                         var respostas = respostasContainer.querySelectorAll('.resposta');
-                        if (respostas.length === 0) {
-                            respostasContainer.appendChild(respostaElement);
-                            button.previousElementSibling.value = '';
-                            button.disabled = true;
-                        } else {
-                            alert('Já foi adicionada uma resposta para este comentário principal.');
-                        }
+                        respostasContainer.appendChild(respostaElement);
+                        button.previousElementSibling.value = '';
+
                     }
+
+
+                    function showAnswerBox(event) {
+                        let btn = event.currentTarget;
+                        btn.nextSibling.classList.toggle('show-box');
+                    }
+
                 </script>
 
                 <div class="col-md-10">
                     <div class="conteudo-adm">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h2>FAQ</h2>
-                                    <div id="comentarios">
-                                        <!-- Aqui serão exibidos os comentários -->
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <textarea id="comentario" class="form-control" rows="3"
-                                                placeholder="Digite um comentário"></textarea>
-                                            <button onclick="adicionarComentario()"
-                                                class="btn btn-primary mt-2">Enviar</button>
-                                        </div>
-                                    </div>
+                        <div class="wrap-faq">
+                            <h2>FAQ</h2>
+
+                            <div class="card fixed-comentario">
+                                <div class="card-body">
+                                    <textarea id="comentario" class="form-control" rows="3"
+                                        placeholder="Digite um comentário"></textarea>
                                 </div>
+                                <button onclick="adicionarComentario()" class="btn-padrao mt-2">Enviar</button>
+                            </div>
+                            <div id="comentarios" class="comentarios">
+                                <!-- Aqui serão exibidos os comentários -->
                             </div>
                         </div>
                     </div>
