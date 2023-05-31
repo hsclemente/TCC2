@@ -168,7 +168,7 @@
                         var comentarioElement = document.createElement('div');
                         comentarioElement.classList.add('comentario');
                         comentarioElement.innerHTML = '<div class="conteudo-comentario principal">'
-                            + '<p class="usuario-pergunta">Henrique Clemente</p>' + '<p class="user-comment">' + comentario + '</p>' +
+                            + '<p class="usuario-pergunta"><b>Comentário por: </b>Henrique Clemente</p>' + '<p class="user-comment">' + comentario + '</p>' +
                             '<div class="respostas"></div>' + '<div class="open-answer" id="open-answer" onclick="showAnswerBox(event)"><small class="responder-small">Responder</small></div>' +
                             '<textarea class="resposta-campo" style="display: none" id="answer-box" rows="1" placeholder="Escreva uma resposta"></textarea>' +
                             '<button class="btn-padrao" onclick="adicionarResposta(this)">Enviar</button>' +
@@ -184,7 +184,7 @@
                         var resposta = button.previousElementSibling.value;
                         var respostaElement = document.createElement('div');
                         respostaElement.classList.add('resposta');
-                        respostaElement.innerHTML = '<p class="usuario-resposta">Henrique Clemente 2</p><p class="user-comment">' + resposta + '</p>';
+                        respostaElement.innerHTML = '<p class="usuario-resposta"><b>Respondido por: </b>Henrique Clemente 2</p><p class="user-comment">' + resposta + '</p>';
 
                         var comentarioElement = button.parentElement;
                         var respostasContainer = comentarioElement.querySelector('.respostas');
