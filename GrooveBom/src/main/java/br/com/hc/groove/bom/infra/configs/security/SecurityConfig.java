@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests()
-                    .requestMatchers(HttpMethod.POST, "/login")
+                    .requestMatchers(HttpMethod.POST, "/login", "/usuario")
                         .permitAll()
                     .requestMatchers("v3/api-docs/**", "/", "/swagger-ui/**")
                         .permitAll()
