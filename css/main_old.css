@@ -16,13 +16,6 @@ object {
     background-color: darkorange;
     display: flex;
     padding: 5px 0;
-    z-index: 999;
-    position: relative;
-}
-
-.menu-principal .header .logo img {
-    width: 160px;
-    height: 40px;
 }
 
 .header {
@@ -203,12 +196,9 @@ object {
 }
 
 .menu-lateral {
-    width: 16%;
+    width: 100%;
     background-color: darkorange;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    padding-top: 75px;
+    height: 600px;
 }
 
 .conteudo-adm {
@@ -239,11 +229,6 @@ object {
 .footer .logo {
     text-align: center;
     width: 100%;
-}
-
-.footer .logo img {
-    height: 40px;
-    width: 160px;
 }
 
 .footer .redes-sociais ul {
@@ -375,7 +360,6 @@ object {
     padding: 2rem;
     background-color: darkorange;
     border-radius: 10px;
-    top: 25vh;
     /* Altere o valor conforme necessário para ajustar o arredondamento dos cantos */
 }
 
@@ -444,6 +428,7 @@ object {
 
 #agendamento {
     padding: 20px;
+    background-color: #f1f1f1;
 }
 
 #agendamento h2 {
@@ -456,26 +441,23 @@ object {
 
 #agendamento label {
     display: block;
-    /* margin-bottom: 5px; */
+    margin-bottom: 5px;
 }
 
 #agendamento input[type="date"],
 #agendamento input[type="time"],
 #agendamento textarea {
     width: 100%;
-    padding: 8px;
+    padding: 5px;
     margin-bottom: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
 }
 
 #agendamento button[type="submit"] {
-    background-color: darkorange;
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
 }
 
 .titulo-operacoes {
@@ -509,7 +491,7 @@ object {
     display: inline-block;
 }
 
-.btn-padrao.login {
+.btn-padrao.login{
     width: 100%;
 }
 
@@ -522,239 +504,118 @@ object {
     width: 50%;
 }
 
-textarea:focus,
-input:focus,
-button:focus {
-    outline: unset !important;
-}
 
 
 /* Estilos para os cards de tarefas */
 .tarefa-card {
-/*     background-color: grey;
-    border: 3px solid red; */
+    background-color: yellow;
     padding: 20px;
     margin-bottom: 10px;
     border-radius: 5px;
-    box-shadow: 2px 6px 4px 2px rgba(0, 0, 0, 0.1);
-}
-
-.tarefa-card h3 {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tarefa-card h3 {
     margin-top: 0;
     margin-bottom: 10px;
-}
-
-.tarefa-card p {
+  }
+  
+  .tarefa-card p {
     margin: 0;
-    word-wrap: break-word;
-    margin-bottom: 10px;
-}
-
-/* Estilos para o formulário de adicionar tarefa */
-#form-tarefa {
+  }
+  
+  /* Estilos para o formulário de adicionar tarefa */
+  #form-tarefa {
     margin-bottom: 20px;
-}
-
-#form-tarefa input[type="text"],
-#form-tarefa input[type="date"] {
+  }
+  
+  #form-tarefa input[type="text"],
+  #form-tarefa input[type="date"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    border: 1px solid #ced4da;
+    border: 1px solid darkorange;
     border-radius: 5px;
-}
-
-#form-tarefa button {
+  }
+  
+  #form-tarefa button {
     background-color: darkorange;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-#form-tarefa button:hover {
+  }
+  
+  #form-tarefa button:hover {
     background-color: orange;
-}
-
-/* Afasta o conteúdo da gestão de tarefas do header */
+  }
+  
+  /* Afasta o conteúdo da gestão de tarefas do header */
 .gestao-tarefas {
-    /* margin-top: 0px;
-    margin-left: 15px; */
-    padding: 20px;
-}
-
-.gestao-tarefas h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-
-/* Afasta o conteúdo da gestão de tarefas da barra lateral esquerda */
-.gestao-tarefas .menu-lateral {
+    margin-top: 0px;
+  }
+  
+  /* Afasta o conteúdo da gestão de tarefas da barra lateral esquerda */
+  .gestao-tarefas .menu-lateral {
     margin-left: 20px;
-}
-
-/* Adiciona espaçamento inferior aos cards de tarefas */
-.tarefa-card {
+  }
+  
+  /* Adiciona espaçamento inferior aos cards de tarefas */
+  .tarefa-card {
     margin-bottom: 20px;
-    width: 32%;
-    background-color: #ffec46;
-}
+  }
 
-.comentario {
-    margin-bottom: 20px;
-}
+  .comentario {
+      margin-bottom: 20px;
+  }
 
-.fixed-comentario {
-    width: 100%;
-}
+  .conteudo-comentario,
+  .conteudo-resposta {
+      background-color: #ccc;
+      padding: 10px;
+      border: 1px solid darkorange;
+      border-radius: 5px;
+      font-family: Arial, sans-serif;
+  }
 
-.fixed-comentario button {
-    width: 150px;
-}
+  .conteudo-resposta {
+      margin-top: 10px;
+      margin-left: 20px;
+  }
 
-/* .comentarios {
-    max-height: 300px;
-    overflow-y: auto;
-} */
+  .resposta textarea {
+      margin-bottom: 5px;
+  }
 
-.conteudo-comentario,
-.conteudo-resposta {
-    background-color: white;
-    padding: 15px 25px;
-    border: 1px solid #d9d9d9;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-}
-
-.conteudo-resposta {
-    margin-top: 10px;
-    margin-left: 20px;
-}
-
-.respostas {
-    margin: 0 20px;
-}
-
-.resposta-campo {
-    padding: 10px 20px;
-    height: 150px;
-    width: 100%;
-    resize: unset;
-    margin-bottom: 5px;
-}
-
-.resposta {
-    padding: 35px;
-    background: #e1e1e1;
-    color: black;
-    margin-bottom: 25px;
-    border-radius: 42px;
-}
-
-.usuario-pergunta {
-    font-size: 14px;
-    color: rgb(78 78 78);
-    margin-bottom: 0;
-}
-
-.usuario-resposta {
-    font-size: 14px;
-    margin-bottom: 0;
-    color: black;
-}
-
-.user-comment {
-    font-size: 14px;
-}
-
-
-.open-answer {
-    cursor: pointer;
-    text-decoration: underline;
-    color: grey;
-    margin-bottom: 8px;
-}
-
-.show-box {
-    display: block !important;
-}
-
-.description-input {
+  .description-input {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
-}
+  }
 
-.w-60 {
+  .w-60 {
     width: 60%;
-}
+  }
 
-.w-100 {
+  .w-100 {
     width: 100%;
-}
+  }
 
-.float-left {
+  .float-left {
     float: left;
-}
+  }
 
-.mb-2 {
+  .mb-2 {
     margin-bottom: 1rem;
-}
+  } 
 
-.color-red {
+  .color-red {
     color: red;
 }
 
 .text-center {
     text-align: center;
-}
-
-.wrap-faq {
-    padding: 20px;
-}
-
-.wrap-faq h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-#lista-tarefas{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-#lista-tarefas .tarefa-card h3{
-    font-size: 20px;
-}
-
-#agendamento h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-#comentario {
-    height: 38px;
-}
-
-#myChart {
-    width: 100% !important;
-}
-
-.wrap-radio{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.wrap-radio.checkbox{
-    gap: 10px
-}
-
-.wrap-radio.checkbox label{
-   margin: 0;
 }
