@@ -78,12 +78,16 @@
                             <h2>Agendar Compromisso</h2>
                             <form>
                                 <label for="tipoCompomisso">Tipo do Compomisso:</label>
-                                <fieldset>
-                                    <input type="radio" id="show" name="Show" value="Show">
-                                    <label for="Show">Show</label>
-                                    <input type="radio" id="outros" name="Outros" value="Outros">
-                                    <label for="Outros">Outros</label>
-                                </fieldset>
+                                <div class="wrap-radio">
+                                    <div class="wrap-radio checkbox">
+                                        <input type="radio" id="show" name="Show" value="Show">
+                                        <label for="Show">Show</label>
+                                    </div>
+                                    <div class="wrap-radio checkbox">
+                                        <input type="radio" id="outros" name="Outros" value="Outros">
+                                        <label for="Outros">Outros</label>
+                                    </div>
+                                </div>
 
                                 <label for="data">Data:</label>
                                 <input type="date" id="data" name="data" required>
@@ -92,7 +96,8 @@
                                 <input type="time" id="hora" name="hora" required>
 
                                 <label for="descricao">Descrição:</label>
-                                <textarea id="descricao" name="descricao" required placeholder="Descrição do Compromisso"></textarea>
+                                <textarea id="descricao" name="descricao" required
+                                    placeholder="Descrição do Compromisso"></textarea>
 
                                 <button type="submit">Agendar</button>
                                 <ul id="lista-compromissos"></ul>
@@ -105,40 +110,40 @@
                                     var dateB = new Date(b.data + 'T' + b.hora);
                                     return dateA - dateB;
                                 }
-                            
+
                                 // Captura o formulário quando o botão "Agendar" for clicado
                                 document.querySelector('form').addEventListener('submit', function (event) {
                                     event.preventDefault(); // Previne o comportamento padrão de envio do formulário
-                            
+
                                     // Captura os valores dos campos do formulário
                                     var data = document.getElementById('data').value;
                                     var hora = document.getElementById('hora').value;
                                     var descricao = document.getElementById('descricao').value;
-                            
+
                                     // Cria um objeto com os dados do compromisso
                                     var compromisso = {
                                         data: data,
                                         hora: hora,
                                         descricao: descricao
                                     };
-                            
+
                                     // Adiciona o novo compromisso à lista de compromissos
                                     var listaCompromissos = document.getElementById('lista-compromissos');
                                     listaCompromissos.appendChild(createListItem(compromisso));
-                            
+
                                     // Ordena a lista de compromissos
                                     var compromissos = Array.from(listaCompromissos.children);
                                     compromissos.sort(compareDates);
                                     compromissos.forEach(function (item) {
                                         listaCompromissos.appendChild(item);
                                     });
-                            
+
                                     // Limpa os campos do formulário
                                     document.getElementById('data').value = '';
                                     document.getElementById('hora').value = '';
                                     document.getElementById('descricao').value = '';
                                 });
-                            
+
                                 // Função para criar um novo item de lista
                                 function createListItem(compromisso) {
                                     var listItem = document.createElement('li');
@@ -146,8 +151,8 @@
                                     return listItem;
                                 }
                             </script>
-                            
-                            
+
+
 
                         </div>
                     </div>
