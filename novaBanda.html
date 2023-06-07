@@ -11,8 +11,6 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-image: linear-gradient(45deg, orange, darkorange);
-
-            
         }
         /**
         background-image: linear-gradient(45deg, cyan, yellow);
@@ -53,73 +51,64 @@
 <script>
     function enviarForm() {
         var formularioCorreto = true;
-        var inputEmail = document.getElementById('email').value;
         var inputNome = document.getElementById('nome').value;
-        var inputDescricao = document.getElementById('descricao').value;
-        var inputEspecialidade = document.getElementById('especialidade').value;
-        var inputSenha = document.getElementById('senha').value;
-        var inputConfirmarSenha = document.getElementById('confirmar-senha').value;
-
-
-        if (inputEmail.length == 0 || !inputEmail.includes('@') || inputEmail.endsWith("@")){
-            formularioCorreto = false;
-            document.getElementById('ErrorEmail').textContent='E-mail inválido.';
-        }else{
-            document.getElementById('ErrorEmail').textContent='';
-        }
-
+        var inputCodigo = document.getElementById('codigo').value;
+        var inputConfirmarCodigo = document.getElementById('confirmar-codigo').value;
 
         if (inputNome.length == 0){
             formularioCorreto = false;
-            document.getElementById('ErrorNome').textContent='Nome inválido.';
+            document.getElementById('erro-nome').textContent='Favor informar um valor.';
         }else{
-            document.getElementById('ErrorNome').textContent='';
+            document.getElementById('erro-nome').textContent='';
         }
 
 
-        if (inputSenha.length < 6){
+        if (inputCodigo.length == 0){
             formularioCorreto = false;
-            document.getElementById('ErrorSenha').textContent='Senha precisa ter mais que 5 caractéres.';
+            document.getElementById('erro-codigo').textContent='Codigo inválido.';
         }else{
-            document.getElementById('ErrorSenha').textContent='';
+            document.getElementById('erro-codigo').textContent='';
         }
-
-
-        if (inputConfirmarSenha != inputSenha){
+        
+        if (inputCodigo != inputConfirmarCodigo) {
             formularioCorreto = false;
-            document.getElementById('ErrorConfirmSenha').textContent='As senhas não coincidem.';
-        }else{
-            document.getElementById('ErrorConfirmSenha').textContent='';
+            document.getElementById('erro-confirmar-codigo').textContent='Valores não coincidem';
+        } else {
+            document.getElementById('erro-confirmar-codigo').textContent='';
         }
-
 
         if (!formularioCorreto){
             return;
         }
-        console.log('chamando back')
 
-
-        fetch("http://localhost:8080/usuario", {
+        fetch("http://localhost:8080/banda", {
             method: "POST",
             body: JSON.stringify({
-                email: inputEmail,
-                password: inputSenha,
                 nome: inputNome,
-                descricao: inputDescricao,
-                especialidade: inputEspecialidade
+                codigoAcesso: inputCodigo,
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
+                "Authorization": "Bearer " + localStorage.getItem('token')
             },
         }).then(response => {
-            if (response.ok) {
+            console.log(response)
+            console.log(response.status)
+            if (response.status == 201) {
+                document.getElementById('ErrorForm').textContent='';
                 return response.json();
             } else {
-                document.getElementById('ErrorForm').textContent='Erro ao enviar formulário.';   
-                throw new Error();          
+                throw new Error(response.status);
             }
         }).then(data => {
-            window.location.href = './conectar.html';
+            localStorage.setItem('idBanda', data.id);
+            window.location.href = './banda.html';
+        }).catch(response => {
+            if (response.message == 400) {
+                document.getElementById('ErrorForm').textContent='Código de acesso já existe.';
+            } else {
+                document.getElementById('ErrorForm').textContent='Erro ao enviar formulário.';
+            }
         })
     }
 </script>
@@ -133,22 +122,22 @@
     <div class="tela-login">
         <h1>Nova Banda</h1>
         
-        <input type="text" id="nome" name="nome" placeholder="Nome da Banda">
+        <input type="text" id="nome" name="nome" placeholder="Nome da Banda" class="w-100" autofocus>
         
-        <small id="ErrorNome" style="color: red;"></small>
+        <small id="erro-nome" style="color: red;"></small>
                  
-        <input type="password" id="senha" name="senha" placeholder="Código de Acesso">
+        <input type="password" id="codigo" name="codigo" placeholder="Código de Acesso" class="w-100">
         
-        <small id="ErrorSenha" style="color: red;"></small>
+        <small id="erro-codigo" style="color: red;"></small>
                
-        <input type="password" id="confirmar-senha" name="Confirmar-Senha" placeholder="Confirmar Código de Acesso">
+        <input type="password" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso" class="w-100">
         
-        <small id="ErrorConfirmSenha" style="color: red;"></small>
+        <small id="erro-confirmar-codigo" style="color: red;"></small>
         <br>
-        <button onclick="enviarForm()">Enviar</button>
+        <button onclick="enviarForm()" class="w-100" style="display: inline-block; cursor: pointer;">Enviar</button>
         <br><br>
         <small id="ErrorForm" style="color: red;"></small>
-        
+        <p>Já possui uma banda?<a href="acessarBanda.html" style="color: orange; text-decoration: none;"> Se associe a ela</a></p>
     </div>
 </body>
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,8 +33,9 @@ public class BandaController {
         return ResponseEntity.ok(bandaService.buscarBandas(paginacao));
     }
 
+    @Transactional
     @PostMapping
-    public ResponseEntity<?> criarBanda(@RequestBody@Valid BandaForm banda, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> criarBanda(@RequestBody@Valid BandaForm banda, UriComponentsBuilder uriBuilder) throws Exception {
         BandaDTO bandaDTO = bandaService.criarBanda(banda);
         return ResponseEntity.created(uriBuilder.path("banda/{id}").buildAndExpand(bandaDTO.id()).toUri()).body(bandaDTO);
     }
@@ -42,5 +44,4 @@ public class BandaController {
     public ResponseEntity<?> alterarNome(@RequestBody @Valid BandaForm banda, @PathVariable("id")Long bandaId) {
         return ResponseEntity.ok(bandaService.alterarNome(banda, bandaId));
     }
-
 }

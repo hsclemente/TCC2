@@ -25,6 +25,9 @@ public class Banda {
     @Column(name = "nome", nullable = true)
     private String nome;
 
+    @Column(name = "codigo_acesso", nullable = false, unique = true)
+    private String codigoAcesso;
+
     @PrePersist
     public void create() {
         this.id = null;
@@ -32,5 +35,6 @@ public class Banda {
 
     public Banda(BandaForm bandaForm) {
         this.nome = bandaForm.nome();
+        this.codigoAcesso = bandaForm.codigoAcesso();
     }
 }

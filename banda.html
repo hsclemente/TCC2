@@ -16,6 +16,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <title>Meu TCC 2</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            verificaBanda();
+        });
+
+        function verificaBanda() {
+            if (localStorage.getItem('idBanda') != 'null') {
+                console.log('tem banda')
+            } else {
+                window.location.href = './novaBanda.html';
+            }
+        }
+    </script>
 </head>
 
 <body>
