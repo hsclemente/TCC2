@@ -49,9 +49,9 @@ public class UsuarioService {
         return "Usuario desativado com sucesso";
     }
 
-    public String adicionarBanda(Long usuarioId, Long bandaId) {
+    public String adicionarBanda(Long usuarioId, String codigoBanda) {
         Usuario usuario = usuarioRepository.findByIdAndAtivoIsTrue(usuarioId).orElseThrow(EntityNotFoundException::new);
-        usuario.setBanda(bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new));
+        usuario.setBanda(bandaRepository.findByCodigoAcesso(codigoBanda).orElseThrow(EntityNotFoundException::new));
         usuarioRepository.save(usuario);
         return "Usuario adicionado à banda com sucesso";
     }

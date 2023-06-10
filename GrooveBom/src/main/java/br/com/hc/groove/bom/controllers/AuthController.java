@@ -32,14 +32,14 @@ public class AuthController {
                 "descricao": "%s",
                 "especialidade" : "%s",
                 "email" : "%s",
-                "idBanda" : "%s",
+                "codigoBanda" : "%s",
                 "token" : "%s"
             }""".formatted(principal.getId(), 
                            principal.getNome(),
                            principal.getDescricao(), 
                            principal.getEspecialidade(),
                            principal.getEmail(),
-                           principal.getBanda() != null ?  principal.getBanda().getId() : "null",
+                           principal.getBanda() != null ?  principal.getBanda().getCodigoAcesso() : "null",
                            tokenService.tokenFactory(principal)
             ));
     }

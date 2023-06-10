@@ -101,7 +101,7 @@
                 throw new Error(response.status);
             }
         }).then(data => {
-            localStorage.setItem('idBanda', data.id);
+            localStorage.setItem('codigoBanda', data.id);
             window.location.href = './banda.html';
         }).catch(response => {
             if (response.message == 400) {

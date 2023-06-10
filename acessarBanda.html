@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/main.css">
@@ -12,6 +13,7 @@
             font-family: Arial, Helvetica, sans-serif;
             background-image: linear-gradient(45deg, orange, darkorange);
         }
+
         /**
         background-image: linear-gradient(45deg, cyan, yellow);
         **/
@@ -25,6 +27,7 @@
             border-radius: 15px;
             color: white;
         }
+
         input {
             padding: 15px;
             border: none;
@@ -34,6 +37,7 @@
             margin-bottom: 5px;
             display: block;
         }
+
         button {
             background-color: darkorange;
             border: none;
@@ -43,67 +47,75 @@
             color: white;
             font-size: 15px;
         }
-        button:hover{
+
+        button:hover {
             background-color: orange;
         }
     </style>
 
-<script>
+    <script>
 
-    function adicionarUsuarioNaBanda() {
-        var formularioCorreto = true;
-        var inputCodigo = document.getElementById('codigo').value;
-        var inputConfirmarCodigo = document.getElementById('confirmar-codigo').value;
+        function adicionarUsuarioNaBanda() {
+            var formularioCorreto = true;
+            var inputCodigo = document.getElementById('codigo').value;
+            var inputConfirmarCodigo = document.getElementById('confirmar-codigo').value;
 
-        if (inputCodigo.length == 0){
-            formularioCorreto = false;
-            document.getElementById('codigo-error').textContent='Codigo inválido.';
-        }else{
-            document.getElementById('codigo-error').textContent='';
-        }
-
-        if (inputCodigo != inputConfirmarCodigo) {
-            formularioCorreto = false;
-            document.getElementById('confirmar-codigo-error').textContent='Valores não coincidem';
-        } else {
-            document.getElementById('confirmar-codigo-error').textContent='';
-        }
-
-        if (!formularioCorreto){
-            return;
-        }
-
-        var userId = localStorage.getItem('id');
-        var api = "http://localhost:8080/" + userId + '/banda/' + inputCodigo;
-
-        fetch(api, {
-            method: "PATCH",
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-                "Authorization": "Bearer " + localStorage.getItem('token')
-            },
-        }).then(response => {
-            console.log(response)
-            if (response.ok) {
-                document.getElementById('ErrorForm').textContent = '';
-                return response.json();
+            if (inputCodigo.length == 0) {
+                formularioCorreto = false;
+                document.getElementById('codigo-error').textContent = 'Codigo inválido.';
             } else {
-                document.getElementById('ErrorForm').textContent = 'Erro ao associar usuário com a banda.';
-                throw new Error();
+                document.getElementById('codigo-error').textContent = '';
             }
-        }).then(data => {
-            console.log(data)
-        }).catch(err => {
-            limpaForm();
-        })
-    }
 
-    function limpaForm() {
-        document.getElementById('codigo').value = '';
-        document.getElementById('confirmar-codigo').value = '';
-    }
-</script>
+            if (inputCodigo != inputConfirmarCodigo) {
+                formularioCorreto = false;
+                document.getElementById('confirmar-codigo-error').textContent = 'Valores não coincidem';
+            } else {
+                document.getElementById('confirmar-codigo-error').textContent = '';
+            }
+
+            if (!formularioCorreto) {
+                return;
+            }
+
+            var userId = localStorage.getItem('id');
+
+            fetch("http://localhost:8080/usuario/" + userId + "/banda/" + inputCodigo, {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    console.log("Entrei")
+                    document.getElementById('ErrorForm').textContent = '';
+                    console.log("Entrei2")
+                    localStorage.setItem('codigoBanda', inputCodigo)
+                    window.location.href = './banda.html';
+                } else {
+                    throw new Error(response.status);
+                }
+            }).then(data => {
+
+            }).catch(err => {
+                if (err.message == 404) {
+                    document.getElementById('ErrorForm').textContent = 'Código de acesso não existe.';
+                } else {
+                    document.getElementById('ErrorForm').textContent = 'Erro ao associar usuário com a banda.';
+                }
+
+                limpaForm();
+            })
+        }
+
+        function limpaForm() {
+            document.getElementById('codigo').value = '';
+            document.getElementById('confirmar-codigo').value = '';
+        }
+    </script>
 </head>
+
 <body>
     <div class="btn-voltar">
         <a href="#" onclick="window.location.href = './banda.html'">
@@ -112,19 +124,19 @@
     </div>
     <div class="tela-login">
         <h1>Acessar Banda</h1>
-                 
+
         <input type="password" id="codigo" name="codigo" placeholder="Código de Acesso">
-        
+
         <small id="codigo-error" style="color: red;"></small>
-               
+
         <input type="password" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso">
-        
+
         <small id="confirmar-codigo-error" style="color: red;"></small>
         <br>
         <button onclick="adicionarUsuarioNaBanda()">Enviar</button>
         <br><br>
         <small id="ErrorForm" style="color: red;"></small>
-        
+
     </div>
 </body>
 

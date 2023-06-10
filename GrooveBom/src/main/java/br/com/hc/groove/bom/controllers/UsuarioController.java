@@ -27,9 +27,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @PatchMapping("{usuarioId}/banda/{bandaId}")
-    public ResponseEntity<?> adicionarBanda(@PathVariable("usuarioId") Long usuarioId, @PathVariable("bandaId") Long bandaId) {
-        return ResponseEntity.ok(usuarioService.adicionarBanda(usuarioId, bandaId));
+    @PatchMapping("{usuarioId}/banda/{codigoBanda}")
+    public ResponseEntity<?> adicionarBanda(@PathVariable("usuarioId") Long usuarioId, @PathVariable("codigoBanda") String codigoBanda) {
+        return ResponseEntity.ok(usuarioService.adicionarBanda(usuarioId, codigoBanda));
     }
 
     @DeleteMapping("{usuarioId}/banda")
