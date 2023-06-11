@@ -42,7 +42,6 @@
                 return response.json();
             }).then(data => {
                 var saldo = 0;
-                console.log(data.content)
                 // var list = Object.entries(data);
                 var list = Object.keys(data.content).map((chave) => {
                     var obj = data.content[chave]

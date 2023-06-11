@@ -88,9 +88,7 @@
                 },
             }).then(response => {
                 if (response.ok) {
-                    console.log("Entrei")
                     document.getElementById('ErrorForm').textContent = '';
-                    console.log("Entrei2")
                     localStorage.setItem('codigoBanda', inputCodigo)
                     window.location.href = './banda.html';
                 } else {

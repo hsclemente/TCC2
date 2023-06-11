@@ -183,7 +183,6 @@
                                 throw new Error();
                             }
                         }).then(data => {
-                            console.log(data)
                             criarComentario(data.pergunta, data.usuarioFaq.nome);
                         })
                     }
@@ -204,7 +203,6 @@
                     }
 
                     function adicionarResposta(button) {
-                        console.log(button)
                         var resposta = button.previousElementSibling.value;
                         var respostaElement = document.createElement('div');
                         respostaElement.classList.add('resposta');
