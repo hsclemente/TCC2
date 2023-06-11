@@ -758,3 +758,17 @@ button:focus {
 .wrap-radio.checkbox label{
    margin: 0;
 }
+
+.botao-login-banda {
+    width: 100%;
+}
+
+.w-100.input-login {
+    width: 90%;
+}
+
+.exit-banda {
+    color: red !important;
+    background-color: #c5bebe !important;
+    font-weight: 700;
+}
