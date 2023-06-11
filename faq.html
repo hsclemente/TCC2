@@ -13,6 +13,219 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            carregarFaq();
+        });
+
+        function carregarFaq() {
+            fetch("http://localhost:8080/faq", {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(response.status);
+                }
+            }).then(data => {
+                data.forEach(element => {
+                    criarComentario(element.id, element.pergunta, element.usuarioFaq.nome, element.respostas)
+                });
+            }).catch(err => {
+                alert('Erro ao carregar FAQ, tente novamente.')
+            })
+        }
+
+        var palavrasProibidas = ['Aleijada',
+            'aleijada',
+            'aleijado',
+            'Aleijado',
+            'arrombada',
+            'Arrombada',
+            'arrombado',
+            'Arrombado',
+            'abestado',
+            'arregaçado',
+            'arregaçada',
+            'Arregaçado',
+            'Arregaçada',
+            'babaca',
+            'Babaca',
+            'bosta',
+            'Bosta',
+            'burra',
+            'Burra',
+            'burro',
+            'Burro',
+            'boiola',
+            'Boiola',
+            'boiolinha',
+            'besta',
+            'broxa',
+            'corna',
+            'corno',
+            'cu ',
+            'Cu ',
+            ' cu ',
+            ' Cu ',
+            'cuzão',
+            'cuzao',
+            'Cuzão',
+            'Cuzao',
+            'cuzona',
+            'Cuzona',
+            'caralhudo',
+            'caralho',
+            'Caralho',
+            'desgraçada',
+            'desgraçado',
+            'esquizofrênica',
+            'esquizofrênico',
+            'escroto',
+            'foda',
+            'fuck',
+            'fudida',
+            'fudido',
+            'filho da puta',
+            'fdp',
+            'gay',
+            'idiota',
+            'imbecil',
+            'merda',
+            'monoteta',
+            'otaria',
+            'otária',
+            'otario',
+            'otário',
+            'prostituta',
+            'prostituto',
+            'punheta',
+            'puta',
+            'putinha',
+            'putão',
+            'quenga',
+            'rapariga',
+            'traveco',
+            'vadia',
+            'vadio',
+            'vagabunda',
+            'vagabundo',
+            'xana',
+            'xibiu',
+            'xavasca'];
+
+        function adicionarComentario() {
+            var comentario = document.getElementById('comentario').value;
+
+            var contemPalavraProibida = palavrasProibidas.some(function (palavra) {
+                return comentario.includes(palavra);
+            });
+
+            if (comentario.length == 0 ) {
+                alert('Adicione um comentario');
+                return;
+            }
+            
+            if (contemPalavraProibida) {
+                alert('O comentário contém palavras inapropriadas com as diretrizes do nosso programa. Por favor, revise seu comentário.');
+                return;
+            }
+
+            document.getElementById('comentario').value = '';
+
+            fetch("http://localhost:8080/faq", {
+                method: "POST",
+                body: JSON.stringify({
+                    pergunta: comentario,
+                    usuarioId: localStorage.getItem('id'),
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error();
+                }
+            }).then(data => {
+                location.reload();
+            })
+        }
+
+        function criarComentario(id, comentario, user, respostas) {
+            var comentariosContainer = document.getElementById('comentarios');
+
+            var comentarioElement = document.createElement('div');
+            comentarioElement.classList.add('comentario');
+            comentarioElement.innerHTML = '<div class="conteudo-comentario principal">'
+                + '<p class="usuario-pergunta"><b>Comentário por: </b> ' + user + '</p>' + '<p class="user-comment">' + comentario + '</p>' +
+                '<div class="respostas"></div>' + '<div class="open-answer" id="open-answer" onclick="showAnswerBox(event)"><small class="responder-small">Responder</small></div>' +
+                '<textarea class="resposta-campo" style="display: none" id="answer-box" rows="1" placeholder="Escreva uma resposta"></textarea>' +
+                '<button class="btn-padrao" onclick="adicionarResposta(' + id + ',this)">Enviar</button>' +
+                '</div>';
+
+            comentariosContainer.appendChild(comentarioElement);
+
+            var respostasContainer = comentarioElement.querySelector('.respostas');
+            
+            respostas.forEach(resposta => {
+                criarResposta(resposta.resposta, resposta.usuarioResposta.nome, respostasContainer);
+            });
+        }
+        
+        function criarResposta(resposta, user, respostasContainer) {
+            var respostaElement = document.createElement('div');
+            respostaElement.classList.add('resposta');
+            respostaElement.innerHTML = '<p class="usuario-resposta"><b>Respondido por: </b>' + user + '</p><p class="user-comment">' + resposta + '</p>';
+
+            var respostas = respostasContainer.querySelectorAll('.resposta');
+            respostasContainer.appendChild(respostaElement);
+        }
+        
+        function adicionarResposta(id, button) {
+            var resposta = button.previousElementSibling.value;
+
+            if (resposta.length == 0) {
+                alert('Favor inserir um valor na resposta');
+                return;
+            }
+
+            fetch("http://localhost:8080/faq/responder/" + id , {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    resposta: resposta,
+                    usuarioId: localStorage.getItem('id'),
+                }),
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                } else  {
+                    location.reload();
+                }
+            }).catch(err => {
+                alert('Erro ao enviar resposta')
+            })
+        }
+
+
+        function showAnswerBox(event) {
+            let btn = event.currentTarget;
+            btn.nextSibling.classList.toggle('show-box');
+        }
+
+    </script>
 </head>
 
 <body>
@@ -72,158 +285,6 @@
                         </ul>
                     </div>
                 </div>
-
-                <script>
-                    var palavrasProibidas = ['Aleijada',
-                        'aleijada',
-                        'aleijado',
-                        'Aleijado',
-                        'arrombada',
-                        'Arrombada',
-                        'arrombado',
-                        'Arrombado',
-                        'abestado',
-                        'arregaçado',
-                        'arregaçada',
-                        'Arregaçado',
-                        'Arregaçada',
-                        'babaca',
-                        'Babaca',
-                        'bosta',
-                        'Bosta',
-                        'burra',
-                        'Burra',
-                        'burro',
-                        'Burro',
-                        'boiola',
-                        'Boiola',
-                        'boiolinha',
-                        'besta',
-                        'broxa',
-                        'corna',
-                        'corno',
-                        'cu ',
-                        'Cu ',
-                        ' cu ',
-                        ' Cu ',
-                        'cuzão',
-                        'cuzao',
-                        'Cuzão',
-                        'Cuzao',
-                        'cuzona',
-                        'Cuzona',
-                        'caralhudo',
-                        'caralho',
-                        'Caralho',
-                        'desgraçada',
-                        'desgraçado',
-                        'esquizofrênica',
-                        'esquizofrênico',
-                        'escroto',
-                        'foda',
-                        'fuck',
-                        'fudida',
-                        'fudido',
-                        'filho da puta',
-                        'fdp',
-                        'gay',
-                        'idiota',
-                        'imbecil',
-                        'merda',
-                        'monoteta',
-                        'otaria',
-                        'otária',
-                        'otario',
-                        'otário',
-                        'prostituta',
-                        'prostituto',
-                        'punheta',
-                        'puta',
-                        'putinha',
-                        'putão',
-                        'quenga',
-                        'rapariga',
-                        'traveco',
-                        'vadia',
-                        'vadio',
-                        'vagabunda',
-                        'vagabundo',
-                        'xana',
-                        'xibiu',
-                        'xavasca'];
-
-                    function adicionarComentario() {
-                        var comentario = document.getElementById('comentario').value;
-
-                        var contemPalavraProibida = palavrasProibidas.some(function (palavra) {
-                            return comentario.includes(palavra);
-                        });
-
-                        if (contemPalavraProibida) {
-                            alert('O comentário contém palavras inapropriadas com as diretrizes do nosso programa. Por favor, revise seu comentário.');
-                            return;
-                        }
-
-                        document.getElementById('comentario').value = '';
-
-                        fetch("http://localhost:8080/faq", {
-                            method: "POST",
-                            body: JSON.stringify({
-                                pergunta: comentario,
-                                usuarioId: localStorage.getItem('id'),
-                            }),
-                            headers: {
-                                "Content-type": "application/json; charset=UTF-8",
-                                "Authorization": "Bearer " + localStorage.getItem('token')
-                            },
-                        }).then(response => {
-                            if (response.ok) {
-                                return response.json();
-                            } else {
-                                throw new Error();
-                            }
-                        }).then(data => {
-                            criarComentario(data.pergunta, data.usuarioFaq.nome);
-                        })
-                    }
-
-                    function criarComentario(comentario, user) {
-                        var comentariosContainer = document.getElementById('comentarios');
-
-                        var comentarioElement = document.createElement('div');
-                        comentarioElement.classList.add('comentario');
-                        comentarioElement.innerHTML = '<div class="conteudo-comentario principal">'
-                            + '<p class="usuario-pergunta"><b>Comentário por: </b> ' + user + '</p>' + '<p class="user-comment">' + comentario + '</p>' +
-                            '<div class="respostas"></div>' + '<div class="open-answer" id="open-answer" onclick="showAnswerBox(event)"><small class="responder-small">Responder</small></div>' +
-                            '<textarea class="resposta-campo" style="display: none" id="answer-box" rows="1" placeholder="Escreva uma resposta"></textarea>' +
-                            '<button class="btn-padrao" onclick="adicionarResposta(this)">Enviar</button>' +
-                            '</div>';
-
-                        comentariosContainer.appendChild(comentarioElement);
-                    }
-
-                    function adicionarResposta(button) {
-                        var resposta = button.previousElementSibling.value;
-                        var respostaElement = document.createElement('div');
-                        respostaElement.classList.add('resposta');
-                        respostaElement.innerHTML = '<p class="usuario-resposta"><b>Respondido por: </b>Henrique Clemente 2</p><p class="user-comment">' + resposta + '</p>';
-
-                        var comentarioElement = button.parentElement;
-                        var respostasContainer = comentarioElement.querySelector('.respostas');
-
-                        var respostas = respostasContainer.querySelectorAll('.resposta');
-                        respostasContainer.appendChild(respostaElement);
-                        button.previousElementSibling.value = '';
-
-                    }
-
-
-                    function showAnswerBox(event) {
-                        let btn = event.currentTarget;
-                        btn.nextSibling.classList.toggle('show-box');
-                    }
-
-                </script>
 
                 <div class="col-md-10">
                     <div class="conteudo-adm">
