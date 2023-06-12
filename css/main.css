@@ -469,7 +469,7 @@ object {
     border-radius: 5px;
 }
 
-#agendamento button[type="submit"] {
+#agendamento button {
     background-color: darkorange;
     color: white;
     padding: 10px 20px;

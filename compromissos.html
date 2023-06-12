@@ -13,6 +13,125 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarCompromissos());
+
+        function carregarCompromissos() {
+            fetch("http://localhost:8080/compromisso/" + localStorage.getItem('id'), {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error();             
+                }
+            }).then(data => {
+                console.log(data)
+            }).catch(err => {
+                alert('Erro ao buscar compromissos')
+            })
+        }
+
+        function criarCompromisso() {
+            var isShow = true;
+            var data = document.getElementById('data').value;
+            var hora = document.getElementById('hora').value;
+            var descricao = document.getElementById('descricao').value;
+            var type = document.querySelector('input[name="tipoCompomisso"]:checked').value;
+
+            if (type !== 'show') {
+                isShow = false;
+            }
+
+            if (data.trim() === '') {
+                alert('Favor informar uma data');
+                return;
+            }
+
+            if (hora.trim() === '') {
+                alert('Favor informar uma hora');
+                return;
+            }
+
+            if (descricao.trim() === '') {
+                alert('Favor informar uma descricao');
+                return;
+            }
+
+            var dataFinal = data + 'T' + hora + ':00.000';
+
+            fetch("http://localhost:8080/compromisso", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    isShow: isShow,
+                    descricao: descricao,
+                    data: dataFinal,
+                    idDestinatario: localStorage.getItem('id'),
+                }),
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error();             
+                }
+            }).then(data => {
+                location.reload();
+            }).catch(err => {
+                alert('Erro ao adicionar compromissos')
+            })
+        }
+
+        // // Função para comparar datas e horas
+        // function compareDates(a, b) {
+        //     var dateA = new Date(a.data + 'T' + a.hora);
+        //     var dateB = new Date(b.data + 'T' + b.hora);
+        //     return dateA - dateB;
+        // }
+
+        // // Captura o formulário quando o botão "Agendar" for clicado
+        // document.querySelector('form').addEventListener('submit', function (event) {
+        //     event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+
+        //     // Cria um objeto com os dados do compromisso
+        //     var compromisso = {
+        //         data: data,
+        //         hora: hora,
+        //         descricao: descricao
+        //     };
+
+        //     // Adiciona o novo compromisso à lista de compromissos
+        //     var listaCompromissos = document.getElementById('lista-compromissos');
+        //     listaCompromissos.appendChild(createListItem(compromisso));
+
+        //     // Ordena a lista de compromissos
+        //     var compromissos = Array.from(listaCompromissos.children);
+        //     compromissos.sort(compareDates);
+        //     compromissos.forEach(function (item) {
+        //         listaCompromissos.appendChild(item);
+        //     });
+
+        //     // Limpa os campos do formulário
+        //     document.getElementById('data').value = '';
+        //     document.getElementById('hora').value = '';
+        //     document.getElementById('descricao').value = '';
+        // });
+
+        // // Função para criar um novo item de lista
+        // function createListItem(compromisso) {
+        //     var listItem = document.createElement('li');
+        //     listItem.textContent = compromisso.data + ' às ' + compromisso.hora + ': ' + compromisso.descricao;
+        //     return listItem;
+        // }
+    </script>
 </head>
 
 <body>
@@ -80,11 +199,11 @@
                                 <label for="tipoCompomisso">Tipo do Compomisso:</label>
                                 <div class="wrap-radio">
                                     <div class="wrap-radio checkbox">
-                                        <input type="radio" id="show" name="Show" value="Show">
+                                        <input type="radio" id="show" name="tipoCompomisso" value="show" checked>
                                         <label for="Show">Show</label>
                                     </div>
                                     <div class="wrap-radio checkbox">
-                                        <input type="radio" id="outros" name="Outros" value="Outros">
+                                        <input type="radio" id="outros" name="tipoCompomisso" value="outros">
                                         <label for="Outros">Outros</label>
                                     </div>
                                 </div>
@@ -99,61 +218,9 @@
                                 <textarea id="descricao" name="descricao" required
                                     placeholder="Descrição do Compromisso"></textarea>
 
-                                <button type="submit">Agendar</button>
+                                <button type="button" onclick="criarCompromisso()">Agendar</button>
                                 <ul id="lista-compromissos"></ul>
                             </form>
-
-                            <script>
-                                // Função para comparar datas e horas
-                                function compareDates(a, b) {
-                                    var dateA = new Date(a.data + 'T' + a.hora);
-                                    var dateB = new Date(b.data + 'T' + b.hora);
-                                    return dateA - dateB;
-                                }
-
-                                // Captura o formulário quando o botão "Agendar" for clicado
-                                document.querySelector('form').addEventListener('submit', function (event) {
-                                    event.preventDefault(); // Previne o comportamento padrão de envio do formulário
-
-                                    // Captura os valores dos campos do formulário
-                                    var data = document.getElementById('data').value;
-                                    var hora = document.getElementById('hora').value;
-                                    var descricao = document.getElementById('descricao').value;
-
-                                    // Cria um objeto com os dados do compromisso
-                                    var compromisso = {
-                                        data: data,
-                                        hora: hora,
-                                        descricao: descricao
-                                    };
-
-                                    // Adiciona o novo compromisso à lista de compromissos
-                                    var listaCompromissos = document.getElementById('lista-compromissos');
-                                    listaCompromissos.appendChild(createListItem(compromisso));
-
-                                    // Ordena a lista de compromissos
-                                    var compromissos = Array.from(listaCompromissos.children);
-                                    compromissos.sort(compareDates);
-                                    compromissos.forEach(function (item) {
-                                        listaCompromissos.appendChild(item);
-                                    });
-
-                                    // Limpa os campos do formulário
-                                    document.getElementById('data').value = '';
-                                    document.getElementById('hora').value = '';
-                                    document.getElementById('descricao').value = '';
-                                });
-
-                                // Função para criar um novo item de lista
-                                function createListItem(compromisso) {
-                                    var listItem = document.createElement('li');
-                                    listItem.textContent = compromisso.data + ' às ' + compromisso.hora + ': ' + compromisso.descricao;
-                                    return listItem;
-                                }
-                            </script>
-
-
-
                         </div>
                     </div>
                 </div>
