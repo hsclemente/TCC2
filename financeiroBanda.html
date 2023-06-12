@@ -14,17 +14,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
 
+
+    <style>
+        .submit-popup-button {
+            border: 1px solid black;
+        }
+    </style>
     <script>
-        function setUsuarioSaldo(valor) {
-            // fazer logica do main
+        document.addEventListener('DOMContentLoaded', function () {
+            setUsuarioSaldo();
+        });
+
+        function setUsuarioSaldo() {
+            var tbody = document.getElementById('tbody');
+
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+
+            fetch("http://localhost:8080/saldo/" + localStorage.getItem('id'), {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                var saldo = 0;
+                // var list = Object.entries(data);
+                var list = Object.keys(data.content).map((chave) => {
+                    var obj = data.content[chave]
+                    createLi(obj.status, obj.valor, obj.descricao)
+
+                    if (obj.status === 'ADICAO') {
+                        saldo += obj.valor;
+                    } else {
+                        saldo -= obj.valor;
+                    }
+                });;
+
+                document.getElementById('usuarioSaldo').innerText = saldo;
+            })
+        }
+
+        function createLi(status, valor, descricao) {
+            var table = document.getElementById('tbody');
+            const tr = document.createElement('tr');
+
+            const td1 = document.createElement('td');
+            td1.innerText = status;
+            
+            const td2 = document.createElement('td');
+            td2.innerText = valor;
+            
+            const td3 = document.createElement('td');
+            td3.innerText = descricao;
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+
+            table.appendChild(tr);
         }
 
         function abrirPopupAdicionar() {
-            document.getElementById('popupAdicionar').classList.add('display-flex');
+            document.getElementById('popupAdicionar').style.display = 'block';
         }
 
         function abrirPopupRemover() {
-            document.getElementById('popupRemover').classList.add('display-flex');
+            document.getElementById('popupRemover').style.display = 'block';
         }
 
         function transformaNumerico(valor) {
@@ -42,66 +101,66 @@
         }
 
         function closePopup() {
-            document.getElementById('popupAdicionar').classList.remove('display-flex');
-            document.getElementById('popupRemover').classList.remove('display-flex');
+            document.getElementById('popupAdicionar').style.display = 'none';
+            document.getElementById('popupRemover').style.display = 'none';
+        }
+
+        function cleanPopup() {
+            setPopupErrors('')
+            document.getElementById('valorRemover').innerText = '';
+            document.getElementById('valor').innerHTML = '';
+            document.getElementById('descricaoRemover').innerText = '';
+            document.getElementById('descricaoAdicionar').innerText = '';
         }
 
         function alterarSaldo(operacao) {
-
             if (operacao === 'ADICIONAR') {
                 var valorMudar = document.getElementById('valor').value;
-                var userCheckbox = document.getElementById('usuario-checkbox');
+                var status = 'ADICAO';
+                var descricao = document.getElementById("descricaoAdicionar").value;
             } else {
                 var valorMudar = document.getElementById('valorRemover').value;
-                var userCheckbox = document.getElementById('usuario-checkbox-remover');
+                var status = 'REMOCAO';
+                var descricao = document.getElementById("descricaoRemover").value;
             }
 
-            if (userCheckbox.checked) {
-                var saldo = document.getElementById('usuarioSaldo').innerText;
-                api = 'usuario/' + localStorage.getItem('id');
-            } else {
-                var saldo = document.getElementById('bandaSaldo').innerText;
-                api = 'banda/' + localStorage.getItem('id');
-            }
+            var saldo = document.getElementById('usuarioSaldo').innerText;
 
-
-            if (valorMudar === '') {
-                setPopupErrors('Formulário invalido.')
+            if (valorMudar === '' || descricao === '') {
+                setPopupErrors('Formulário inválido.');
                 return;
             }
 
             try {
+                var saldo = document.getElementById('usuarioSaldo').innerText;
                 saldo = transformaNumerico(saldo);
-                valorMudar = transformaNumerico(valorMudar);
+                var valorMudarNum = transformaNumerico(valorMudar);
+
+                if (valorMudarNum <= 0) {
+                    setPopupErrors('Formulário inválido.');
+                    return;
+                }
+
+                closePopup();
+                fetch("http://localhost:8080/saldo", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        valor: valorMudarNum,
+                        descricao: descricao,
+                        idExterno: localStorage.getItem('id'),
+                        status: status
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        "Authorization": "Bearer " + localStorage.getItem('token')
+                    },
+                }).then(data => {
+                    setUsuarioSaldo();
+                    cleanPopup();
+                });
             } catch (error) {
-                setPopupErrors('Formulário invalido.')
-                return;
+                setPopupErrors('Formulário inválido.');
             }
-
-            if (valorMudar <= 0) {
-                setPopupErrors('Formulário invalido.')
-                return;
-            }
-
-
-            if (operacao === 'ADICIONAR') {
-                valorFinal = saldo + valorMudar;
-            } else {
-                valorFinal = saldo - valorMudar;
-            }
-
-            setPopupErrors('');
-            closePopup();
-            fetch("http://localhost:8080/" + api, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    valor: valorFinal,
-                }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    "Authorization": "Bearer " + localStorage.getItem('token')
-                },
-            })
         }
     </script>
 </head>
@@ -111,40 +170,18 @@
         <div class="container">
             <div class="header">
                 <div class="logo">
-                    <a href="banda.html">
+                    <a href="perfil.html">
                         <img src="./img/logo-grooveBom.png" />
                     </a>
                 </div>
                 <div class="menu">
                     <ul>
-                        <li><a href="perfil.html" style="color: black;">Usuário</a></li>
-                        <li><a href="banda.html">Banda</a></li>
+                        <li><a href="perfil.html">Usuário</a></li>
+                        <li><a href="banda.html" style="color: black;">Banda</a></li>
                     </ul>
                 </div>
-                <div class="redes-sociais">
-                    <ul>
-                        <li>
-                            <a href="https://www.facebook.com/profile.php?id=100090497464066&is_tour_dismissed=true"
-                                target="_blank">
-                                <img src="./img/facebook.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://instagram.com/rick_clemente?igshid=ZDdkNTZiNTM=" target="_blank">
-                                <img src="./img/instagram.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://wa.me/5547996320807" target="_blank">
-                                <img src="./img/whatsapp.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/groups/9317100/" target="_blank">
-                                <img src="./img/linkedin.png" />
-                            </a>
-                        </li>
-                    </ul>
+                <div class="logout">
+                    <a href="index.html">Sair<img src="./img/sair.png" alt=""></a>
                 </div>
             </div>
         </div>
@@ -156,18 +193,19 @@
                 <div class="col-md-2">
                     <div class="menu-lateral">
                         <ul class="list-unstyled">
-                            <li><a href="financeiro.html"><span>Financeiro</span></a></li>
-                            <li><a href="tarefas.html"><span>Gestão de Tarefas</span></a></li>
-                            <li><a href="compromissos.html"><span>Gestão de Compromissos</span></a></li>
-                            <li><a href="faq.html"><span>FAQ</span></a></li>
+                            <li><a href="integrantesBanda.html"><span>Integrantes</span></a></li>
+                            <li><a href="financeiroBanda.html"><span>Financeiro</span></a></li>
+                            <li><a href="tarefasBanda.html"><span>Gestão de Tarefas</span></a></li>
+                            <li><a href="compromissosBanda.html"><span>Gestão de Compromissos</span></a></li>
+                            <li><a class="exit-banda" onclick="sairBanda()"><span>Sair de Banda Atual</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-10">
                     <div class="conteudo-adm">
                         <div class="saldo-financeiro">
-                            <h2>Saldo Financeiro</h2>
-                            <p>Seu saldo atual é R$ <span id="usuarioSaldo">0,00</span></p>
+                            <h2>Saldo Financeiro da Banda</h2>
+                            <p>O saldo atual da banda é R$ <span id="usuarioSaldo">0,00</span></p>
                             <button class="btn-padrao" onclick="abrirPopupAdicionar()">Adicionar saldo</button>
                             <button class="btn-padrao" onclick="abrirPopupRemover()">Remover saldo</button>
                         </div>
@@ -181,22 +219,7 @@
                                         <th>Descrição</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Valor 1</td>
-                                        <td>Valor 2</td>
-                                        <td>Valor 3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Valor 1</td>
-                                        <td>Valor 2</td>
-                                        <td>Valor 3</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Valor 1</td>
-                                        <td>Valor 2</td>
-                                        <td>Valor 3</td>
-                                    </tr>
+                                <tbody id="tbody">
                                 </tbody>
                             </table>
                         </div>
@@ -210,16 +233,12 @@
         <div class="popup-box text-center">
             <h2 class="popup-title">Informe o saldo a adicionar:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
-                <input type="text" class="price-input" id="valor">
+                <div class="w-100 mb-2">
+                    <label for="valor" class="float-left">Valor: </label>
+                    <input type="text" class="price-input w-60" id="valor">
+                </div>
                 <textarea class="descricao-input" id="descricaoAdicionar" placeholder="Incluir descrição"></textarea>
-                <div class="checkbox-container">
-                    <input type="radio" name="opcao" value="banda">
-                    <label for="banda-checkbox">Banda</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="radio" id="usuario-checkbox" name="opcao" value="usuario" checked>
-                    <label for="usuario-checkbox">Usuário</label>
-                </div>
+                <small id="alterar-saldo-erro" class="error color-red"></small>
                 <button class="submit-popup-button" onclick="alterarSaldo('ADICIONAR')">Enviar</button>
             </form>
             <small id="alterar-saldo-erro" class="error color-red"></small>
@@ -231,16 +250,12 @@
         <div class="popup-box text-center">
             <h2 class="popup-title">Informe o saldo a remover:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
-                <input type="text" class="price-input" id="valorRemover">
+                <div class="w-100 mb-2">
+                    <label for="valor" class="float-left">Valor: </label>
+                    <input type="text" class="price-input" id="valorRemover">
+                </div>
                 <textarea class="descricao-input" id="descricaoRemover" placeholder="Incluir descrição"></textarea>
-                <div class="checkbox-container">
-                    <input type="radio" name="opcao" value="banda">
-                    <label for="banda-checkbox">Banda</label>
-                </div>
-                <div class="checkbox-container">
-                    <input type="radio" id="usuario-checkbox-remover" name="opcao" value="usuario" checked>
-                    <label for="usuario-checkbox">Usuário</label>
-                </div>
+                <small id="remover-saldo-erro" class="error color-red"></small>
                 <button class="submit-popup-button" onclick="alterarSaldo('REMOVER')">Enviar</button>
             </form>
             <small id="remover-saldo-erro" class="error color-red"></small>
@@ -250,4 +265,5 @@
 
 
 </body>
+
 </html>

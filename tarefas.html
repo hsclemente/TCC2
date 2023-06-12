@@ -17,6 +17,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', carregarTarefas());
 
+
         function carregarTarefas() {
             fetch("http://localhost:8080/tarefa/" + localStorage.getItem('id'), {
                 method: "GET",
@@ -72,26 +73,40 @@
             })
         }
 
+        function changeColor() {
+            const cards = document.getElementsByClassName('tarefa-card');
+            for (let i = 0; i < cards.length; i++) {
+                const card = cards[i];
+                card.classList.add('concluido');
+            }
+        }
+
         function listarTarefas(tarefas) {
             const listaTarefas = document.getElementById('lista-tarefas');
-            
+
             tarefas.forEach(element => {
                 const card = document.createElement('div');
                 card.classList.add('tarefa-card');
-                
+
                 const titulo = document.createElement('h3');
                 titulo.textContent = element.titulo;
-                
+
                 const descricaoParagrafo = document.createElement('p');
                 descricaoParagrafo.textContent = element.descricao;
-                
+
                 const dataParagrafo = document.createElement('p');
                 dataParagrafo.textContent = `Data: ${element.dataTarefa}`;
-                
+
+                const marcarConcluido = document.createElement('a');
+                marcarConcluido.classList.add('change-tarefa-color');
+                marcarConcluido.textContent = `Marcar concluído`;
+                marcarConcluido.setAttribute('onclick', 'changeColor()');
+
                 card.appendChild(titulo);
                 card.appendChild(descricaoParagrafo);
                 card.appendChild(dataParagrafo);
-                
+                card.appendChild(marcarConcluido);
+
                 listaTarefas.appendChild(card);
             });
         }
@@ -113,30 +128,8 @@
                         <li><a href="banda.html">Banda</a></li>
                     </ul>
                 </div>
-                <div class="redes-sociais">
-                    <ul>
-                        <li>
-                            <a href="https://www.facebook.com/profile.php?id=100090497464066&is_tour_dismissed=true"
-                                target="_blank">
-                                <img src="./img/facebook.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://instagram.com/rick_clemente?igshid=ZDdkNTZiNTM=" target="_blank">
-                                <img src="./img/instagram.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://wa.me/5547996320807" target="_blank">
-                                <img src="./img/whatsapp.png" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.linkedin.com/groups/9317100/" target="_blank">
-                                <img src="./img/linkedin.png" />
-                            </a>
-                        </li>
-                    </ul>
+                <div class="logout">
+                    <a href="index.html">Sair<img src="./img/sair.png" alt=""></a>
                 </div>
             </div>
         </div>

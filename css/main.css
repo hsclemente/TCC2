@@ -768,7 +768,27 @@ button:focus {
 }
 
 .exit-banda {
-    color: red !important;
+    /* color: red !important; */
     background-color: #c5bebe !important;
     font-weight: 700;
+}
+
+.logout a {
+    color:black;
+    font-size: 14px; 
+    text-decoration: none;
+}
+.logout img {
+    margin-left: 6px;
+}
+
+.logout a:hover {
+    color:black;
+    text-decoration: underline;
+}
+
+.concluido{
+    background-color: #6bab31;
+    color: white;
+    transition: all 0,3s;
 }
