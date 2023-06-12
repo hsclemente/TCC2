@@ -41,14 +41,12 @@ public class FaqController {
     @GetMapping
     public ResponseEntity<?> buscarFaqs(
         @RequestParam(name = "page_size", defaultValue = "50", required = false) int pageSize,
-        @RequestParam(name = "page_index", defaultValue = "0", required = false) int pageIndex,
-        FaqFilter filter) {
-        return ResponseEntity.ok(faqService.buscarFaqs(pageSize, pageIndex, filter));
-
+        @RequestParam(name = "page_index", defaultValue = "0", required = false) int pageIndex) {
+        return ResponseEntity.ok(faqService.buscarFaqs(pageSize, pageIndex));
     }
 
     @PostMapping("responder/{faqId}")
-    public ResponseEntity<?> responderFaq(@PathVariable("faqId") Long faqId, @Valid RespostaForm form, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> responderFaq(@PathVariable("faqId") Long faqId, @RequestBody @Valid RespostaForm form, UriComponentsBuilder uriBuilder) {
         FaqDTO faqDTO = faqService.responderFaq(faqId, form);
         return ResponseEntity.created(uriBuilder.path("{faqId}").buildAndExpand(faqDTO.id()).toUri()).body(faqDTO);
     }

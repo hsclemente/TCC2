@@ -38,8 +38,8 @@ public class FaqService {
         return new FaqDTO(faqRepository.save(new Faq(faqForm, usuarioRepository.findById(faqForm.usuarioId()).orElseThrow(EntityNotFoundException::new))));
     }
 
-    public List<FaqDTO> buscarFaqs(int pageSize, int pageIndex, FaqFilter filter) {
-        return faqRepository.buscarFaqs(filter.usuarioNome(), filter.bandaNome(), filter.dataInicio(), filter.dataFim(), pageSize, pageIndex).stream().map(FaqDTO::new).collect(Collectors.toList());
+    public List<FaqDTO> buscarFaqs(int pageSize, int pageIndex) {
+        return faqRepository.buscarFaqs(pageSize, pageIndex).stream().map(FaqDTO::new).collect(Collectors.toList());
     }
 
     public FaqDTO responderFaq(Long faqId, @Valid RespostaForm form) {

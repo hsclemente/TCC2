@@ -29,7 +29,7 @@ public class SaldoController {
     
     @GetMapping("/{idExterno}")
     public ResponseEntity<?> buscarSaldos(
-        @PageableDefault(size = 10, sort = {"data"}, direction = Sort.Direction.DESC) Pageable paginacao,
+        @PageableDefault(size = 100, sort = {"data"}, direction = Sort.Direction.DESC) Pageable paginacao,
         @PathVariable("idExterno") Long idExterno) {
         return ResponseEntity.ok(saldoService.buscarSaldos(idExterno, paginacao));
     }

@@ -13,6 +13,89 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarTarefas());
+
+        function carregarTarefas() {
+            fetch("http://localhost:8080/tarefa/" + localStorage.getItem('id'), {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error();
+                }
+            }).then(data => {
+                listarTarefas(data.content);
+            }).catch(err => {
+                alert('Erro ao carregar Tarefas, tente novamente.')
+            })
+        }
+
+        function adicionarTarefa() {
+            const inputTarefa = document.getElementById('input-tarefa').value;
+            const inputDescricao = document.getElementById('input-descricao').value;
+            const inputData = document.getElementById('input-data').value;
+
+            if (inputTarefa.trim() === '' || inputDescricao.trim() === '' || inputData.trim() === '') {
+                alert('Favor preencha os 3 campos do formulário');
+                return;
+            }
+
+            fetch("http://localhost:8080/tarefa", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    titulo: inputTarefa,
+                    descricao: inputDescricao,
+                    dataTarefa: inputData,
+                    usuarioId: localStorage.getItem('id'),
+                }),
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(response.status);
+                }
+            }).then(data => {
+                location.reload();
+            }).catch(err => {
+                alert('Erro ao carregar Tarefas, tente novamente.')
+            })
+        }
+
+        function listarTarefas(tarefas) {
+            const listaTarefas = document.getElementById('lista-tarefas');
+            
+            tarefas.forEach(element => {
+                const card = document.createElement('div');
+                card.classList.add('tarefa-card');
+                
+                const titulo = document.createElement('h3');
+                titulo.textContent = element.titulo;
+                
+                const descricaoParagrafo = document.createElement('p');
+                descricaoParagrafo.textContent = element.descricao;
+                
+                const dataParagrafo = document.createElement('p');
+                dataParagrafo.textContent = `Data: ${element.dataTarefa}`;
+                
+                card.appendChild(titulo);
+                card.appendChild(descricaoParagrafo);
+                card.appendChild(dataParagrafo);
+                
+                listaTarefas.appendChild(card);
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -78,58 +161,17 @@
                             <h1>Gestão de Tarefas</h1>
                             <form id="form-tarefa">
                                 <label for="text">Título:</label>
-                                <input type="text" id="input-tarefa" placeholder="Digite uma nova tarefa">
+                                <input type="text" id="input-tarefa" placeholder="Digite uma nova tarefa" autofocus>
                                 <label for="text">Descrição:</label>
                                 <input type="text" id="input-descricao" placeholder="Descrição da Tarefa">
                                 <label for="date">Data Para Execução:</label>
                                 <input type="date" id="input-data">
-                                <button type="submit">Adicionar</button>
+                                <button type="button" onclick="adicionarTarefa()">Adicionar</button>
                             </form>
                             <div id="lista-tarefas">
                                 <!-- Tarefas adicionadas dinamicamente serão exibidas aqui -->
                             </div>
                         </div>
-                        
-                        <script>
-                            const formTarefa = document.getElementById('form-tarefa');
-                            const inputTarefa = document.getElementById('input-tarefa');
-                            const inputDescricao = document.getElementById('input-descricao');
-                            const inputData = document.getElementById('input-data');
-                            const listaTarefas = document.getElementById('lista-tarefas');
-                        
-                            formTarefa.addEventListener('submit', function (event) {
-                                event.preventDefault();
-                        
-                                const novaTarefa = inputTarefa.value;
-                                const descricao = inputDescricao.value;
-                                const data = inputData.value;
-                                
-                                if (novaTarefa.trim() !== '') {
-                                    const card = document.createElement('div');
-                                    card.classList.add('tarefa-card');
-                                    
-                                    const titulo = document.createElement('h3');
-                                    titulo.textContent = novaTarefa;
-                                    
-                                    const descricaoParagrafo = document.createElement('p');
-                                    descricaoParagrafo.textContent = descricao;
-                                    
-                                    const dataParagrafo = document.createElement('p');
-                                    dataParagrafo.textContent = `Data: ${data}`;
-                                    
-                                    card.appendChild(titulo);
-                                    card.appendChild(descricaoParagrafo);
-                                    card.appendChild(dataParagrafo);
-                                    
-                                    listaTarefas.appendChild(card);
-                                    
-                                    inputTarefa.value = '';
-                                    inputDescricao.value = '';
-                                    inputData.value = '';
-                                }
-                            });
-                        </script>
-                        
                     </div>
                 </div>
             </div>

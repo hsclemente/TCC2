@@ -1,5 +1,6 @@
 package br.com.hc.groove.bom.domain.models.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import br.com.hc.groove.bom.domain.models.forms.TarefaForm;
@@ -31,7 +32,7 @@ public class Tarefa {
     private String descricao;
 
     @Column(name = "data_tarefa")
-    private LocalDateTime dataTarefa;
+    private LocalDate dataTarefa;
 
     @Column(name = "is_concluido")
     private Boolean concluido;
