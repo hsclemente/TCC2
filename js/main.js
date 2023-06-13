@@ -6,3 +6,7 @@ $('.slider-content').slick({
   adaptiveHeight: true
 });
 
+function sair() {
+  localStorage.clear();
+}
+
