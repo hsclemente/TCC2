@@ -20,7 +20,7 @@ public class CompromissoService {
     private CompromissoRepository compromissoRepository;
 
     public List<CompromissoDTO> buscarCompromissos(Long destinatarioId, Integer pageSize, Integer pageIndex) {
-        return compromissoRepository.buscarCompromissos(destinatarioId, pageSize, pageIndex).stream().map(CompromissoDTO::new).collect(Collectors.toList());
+        return compromissoRepository.buscarCompromissos(destinatarioId, pageSize, pageIndex).stream().sorted().map(CompromissoDTO::new).collect(Collectors.toList());
     }
 
     public CompromissoDTO criarComprimisso(@Valid CompromissoForm form) {

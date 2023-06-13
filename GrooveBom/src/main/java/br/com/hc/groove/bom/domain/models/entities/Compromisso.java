@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "gb_compromissos")
 @AllArgsConstructor@NoArgsConstructor
-public class Compromisso {
+public class Compromisso implements Comparable<Compromisso> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -43,5 +43,13 @@ public class Compromisso {
         this.descricao = form.descricao();
         this.data = form.data();
         this.idDestinatario = form.idDestinatario();
+    }
+
+    @Override
+    public int compareTo(Compromisso o) {
+        LocalDateTime now = LocalDateTime.now();
+        long diffThis = Math.abs(this.data.toLocalDate().toEpochDay() - now.toLocalDate().toEpochDay());
+        long diffOutro = Math.abs(o.getData().toLocalDate().toEpochDay() - now.toLocalDate().toEpochDay());
+        return Long.compare(diffThis, diffOutro);
     }
 }
