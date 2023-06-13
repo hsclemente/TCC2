@@ -126,6 +126,25 @@
                 window.location.href = './conectar.html';
             })
         }
+
+        function sairBanda() {
+            fetch("http://localhost:8080/usuario/" + localStorage.getItem('id') + "/banda", {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    localStorage.setItem('codigoBanda', 'null');
+                    window.location.href = './perfil.html'
+                } else {
+                    throw new Error(response.status);
+                }
+            }).catch(err => {
+                alert('Erro ao sair da banda, favor contate o suporte.');
+            })
+        }
     </script>
 </head>
 
@@ -152,7 +171,7 @@
                     Deseja realmente sair da banda?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger">Sair</button>
+                    <button type="button" class="btn btn-danger" onclick="sairBanda()">Sair</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
