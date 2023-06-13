@@ -33,7 +33,7 @@
                     throw new Error();             
                 }
             }).then(data => {
-                console.log(data)
+                apresentarCompromissos(data);
             }).catch(err => {
                 alert('Erro ao buscar compromissos')
             })
@@ -92,47 +92,48 @@
             })
         }
 
-        // // Função para comparar datas e horas
-        // function compareDates(a, b) {
-        //     var dateA = new Date(a.data + 'T' + a.hora);
-        //     var dateB = new Date(b.data + 'T' + b.hora);
-        //     return dateA - dateB;
-        // }
+        function apresentarCompromissos(data) {
+            data.forEach(element => {
+                createLi(element);
+            });
+        }
 
-        // // Captura o formulário quando o botão "Agendar" for clicado
-        // document.querySelector('form').addEventListener('submit', function (event) {
-        //     event.preventDefault(); // Previne o comportamento padrão de envio do formulário
+        function createLi(element) {
+            var table = document.getElementById('tbody');
+            const tr = document.createElement('tr');
 
-        //     // Cria um objeto com os dados do compromisso
-        //     var compromisso = {
-        //         data: data,
-        //         hora: hora,
-        //         descricao: descricao
-        //     };
+            const td1 = document.createElement('td');
+            td1.innerText = element.isShow ? 'Show' : 'Outros';
+            
+            const td2 = document.createElement('td');
+            td2.innerText = getData(element.data);
+            
+            const td3 = document.createElement('td');
+            td3.innerText = getHour(element.data);
+            
+            const td4 = document.createElement('td');
+            td4.innerText = element.descricao;
 
-        //     // Adiciona o novo compromisso à lista de compromissos
-        //     var listaCompromissos = document.getElementById('lista-compromissos');
-        //     listaCompromissos.appendChild(createListItem(compromisso));
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(td4);
 
-        //     // Ordena a lista de compromissos
-        //     var compromissos = Array.from(listaCompromissos.children);
-        //     compromissos.sort(compareDates);
-        //     compromissos.forEach(function (item) {
-        //         listaCompromissos.appendChild(item);
-        //     });
+            table.appendChild(tr);
+        }
 
-        //     // Limpa os campos do formulário
-        //     document.getElementById('data').value = '';
-        //     document.getElementById('hora').value = '';
-        //     document.getElementById('descricao').value = '';
-        // });
+        function getData(dateTimeString) {
+            var datetime = new Date(dateTimeString);
+            var dateWrongFormat = datetime.toISOString().split('T')[0];
 
-        // // Função para criar um novo item de lista
-        // function createListItem(compromisso) {
-        //     var listItem = document.createElement('li');
-        //     listItem.textContent = compromisso.data + ' às ' + compromisso.hora + ': ' + compromisso.descricao;
-        //     return listItem;
-        // }
+            var dateSlit = dateWrongFormat.split('-');
+            return `${dateSlit[2]}/${dateSlit[1]}/${dateSlit[0]}`;
+        }
+
+        function getHour(dateTimeString) {
+            var datetime = new Date(dateTimeString);
+            return datetime.toISOString().split('T')[1].replace('.000Z', '');
+        }
     </script>
 </head>
 
