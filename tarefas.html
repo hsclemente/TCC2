@@ -75,6 +75,8 @@
 
         function changeColor() {
             const cards = document.getElementsByClassName('tarefa-card');
+            const checkbox = document.getElementById('check-concluido'); // Substitua 'meuCheckbox' pelo ID correto do seu elemento checkbox
+            checkbox.checked = true;
             for (let i = 0; i < cards.length; i++) {
                 const card = cards[i];
                 card.classList.add('concluido');
@@ -88,6 +90,10 @@
                 const card = document.createElement('div');
                 card.classList.add('tarefa-card');
 
+                const checkbox = document.createElement('div');
+                checkbox.classList.add('wrap-concluido');
+                checkbox.setAttribute('onclick', 'changeColor()');
+
                 const titulo = document.createElement('h3');
                 titulo.textContent = element.titulo;
 
@@ -97,15 +103,20 @@
                 const dataParagrafo = document.createElement('p');
                 dataParagrafo.textContent = `Data: ${element.dataTarefa}`;
 
-                const marcarConcluido = document.createElement('a');
+                const marcarConcluido = document.createElement('input');
                 marcarConcluido.classList.add('change-tarefa-color');
-                marcarConcluido.textContent = `Marcar concluído`;
-                marcarConcluido.setAttribute('onclick', 'changeColor()');
+                marcarConcluido.setAttribute('type', 'checkbox');
+                marcarConcluido.setAttribute('id', 'check-concluido');
+                const label = document.createElement('label');
+                label.classList.add('label-concluido');
+                label.textContent = 'Marcar como concluído';
 
+                checkbox.appendChild(marcarConcluido);
+                checkbox.appendChild(label);
                 card.appendChild(titulo);
                 card.appendChild(descricaoParagrafo);
                 card.appendChild(dataParagrafo);
-                card.appendChild(marcarConcluido);
+                card.appendChild(checkbox);
 
                 listaTarefas.appendChild(card);
             });

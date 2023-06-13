@@ -531,7 +531,7 @@ button:focus {
 
 /* Estilos para os cards de tarefas */
 .tarefa-card {
-/*     background-color: grey;
+    /*     background-color: grey;
     border: 3px solid red; */
     padding: 20px;
     margin-bottom: 10px;
@@ -722,13 +722,13 @@ button:focus {
     margin-bottom: 10px;
 }
 
-#lista-tarefas{
+#lista-tarefas {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
-#lista-tarefas .tarefa-card h3{
+#lista-tarefas .tarefa-card h3 {
     font-size: 20px;
 }
 
@@ -745,18 +745,18 @@ button:focus {
     width: 100% !important;
 }
 
-.wrap-radio{
+.wrap-radio {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.wrap-radio.checkbox{
+.wrap-radio.checkbox {
     gap: 10px
 }
 
-.wrap-radio.checkbox label{
-   margin: 0;
+.wrap-radio.checkbox label {
+    margin: 0;
 }
 
 .botao-login-banda {
@@ -774,21 +774,81 @@ button:focus {
 }
 
 .logout a {
-    color:black;
-    font-size: 14px; 
+    color: black;
+    font-size: 14px;
     text-decoration: none;
 }
+
 .logout img {
     margin-left: 6px;
 }
 
 .logout a:hover {
-    color:black;
+    color: black;
     text-decoration: underline;
 }
 
-.concluido{
+.concluido {
     background-color: #6bab31;
     color: white;
-    transition: all 0,3s;
+    transition: all 0, 3s;
+}
+
+.label-concluido {
+    font-size: 14px;
+    color: black;
+    margin: 0;
+    cursor: pointer;
+}
+
+.concluido .label-concluido {
+    color: white !important;
+}
+
+.wrap-concluido {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.label-concluido {
+    position: relative;
+    padding-left: 30px;
+    /* Espaçamento à esquerda para a aparência do checkbox */
+    cursor: pointer;
+}
+
+.label-concluido::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+    background-color: white;
+}
+
+#check-concluido {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#check-concluido:checked+.label-concluido::before {
+    background: white url('../img/check.png') no-repeat center;
+}
+
+.sair-banda, .sair-banda:hover{
+    color: red !important;
+    background: none;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.wrap-sair{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
 }
