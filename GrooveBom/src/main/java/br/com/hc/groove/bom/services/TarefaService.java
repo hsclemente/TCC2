@@ -4,6 +4,7 @@ import br.com.hc.groove.bom.domain.models.dtos.TarefaDTO;
 import br.com.hc.groove.bom.domain.models.entities.Tarefa;
 import br.com.hc.groove.bom.domain.models.forms.TarefaForm;
 import br.com.hc.groove.bom.domain.repositories.TarefaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,5 +21,11 @@ public class TarefaService {
 
     public TarefaDTO criarTarefa(TarefaForm tarefaForm) {
         return new TarefaDTO(tarefaRepository.save(new Tarefa(tarefaForm)));
+    }
+
+    public TarefaDTO concluirTarefa(Long tarefaId) {
+        Tarefa tarefa = tarefaRepository.findById(tarefaId).orElseThrow(EntityNotFoundException::new);
+        tarefa.setConcluido(true);
+        return new TarefaDTO(tarefaRepository.save(tarefa));
     }
 }

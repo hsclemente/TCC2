@@ -74,14 +74,24 @@
             })
         }
 
-        function changeColor() {
-            const cards = document.getElementsByClassName('tarefa-card');
-            const checkbox = document.getElementById('check-concluido'); // Substitua 'meuCheckbox' pelo ID correto do seu elemento checkbox
-            checkbox.checked = true;
-            for (let i = 0; i < cards.length; i++) {
-                const card = cards[i];
-                card.classList.add('concluido');
-            }
+        function changeColor(id) {
+            fetch("http://localhost:8080/tarefa/" + id, {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    elemento = document.getElementsByClassName('tarefa-' + id)[0];
+                    elemento.classList.add('concluido');
+                    elemento.querySelector('input').checked = true;
+                } else {
+                    throw new Error(response.status);
+                }
+            }).catch(err => {
+                alert('Erro ao concluir tarefa')
+            })
         }
 
         function listarTarefas(tarefas) {
@@ -90,10 +100,10 @@
             tarefas.forEach(element => {
                 const card = document.createElement('div');
                 card.classList.add('tarefa-card');
+                card.classList.add('tarefa-' + element.id);
 
                 const checkbox = document.createElement('div');
                 checkbox.classList.add('wrap-concluido');
-                checkbox.setAttribute('onclick', 'changeColor()');
 
                 const titulo = document.createElement('h3');
                 titulo.textContent = element.titulo;
@@ -120,6 +130,13 @@
                 card.appendChild(checkbox);
 
                 listaTarefas.appendChild(card);
+
+                if (element.concluido) {
+                    marcarConcluido.checked = true;
+                    card.classList.add('concluido');
+                } else {
+                    checkbox.setAttribute('onclick', `changeColor(${element.id})`);
+                }
             });
         }
     </script>
