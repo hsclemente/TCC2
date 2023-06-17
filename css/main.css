@@ -955,4 +955,30 @@ button:focus {
     }
 }
 
+#integrantes-lista {
+    padding: 0;
+}
 
+.integrante {
+    color: #000;
+    list-style-type: none;
+    background-color: #fff;
+    text-align: center;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 10px 0;
+    font-size: large;
+}
+
+.integrante:first-child {
+    margin-top: 20px;
+}
+
+.close-popup {
+    position: relative;
+    right: 10px;
+    border: none !important;
+    margin: 0;
+    background: none;
+    font-weight: 800;
+}

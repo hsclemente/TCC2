@@ -1,7 +1,6 @@
 package br.com.hc.groove.bom.domain.models.dtos;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import br.com.hc.groove.bom.domain.models.entities.Tarefa;
 

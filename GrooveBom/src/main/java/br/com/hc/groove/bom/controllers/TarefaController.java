@@ -35,6 +35,14 @@ public class TarefaController {
         return ResponseEntity.ok(tarefaService.buscarTarefas(usuarioId, paginacao));
     }
 
+    @GetMapping("banda/{codigoBanda}")
+    public ResponseEntity<?> buscarTarefasBanda(
+        @PathVariable("codigoBanda") String codigoBanda,
+        @PageableDefault(size = 100, sort = {"dataTarefa"}, direction = Sort.Direction.DESC) Pageable paginacao
+    ) {
+        return ResponseEntity.ok(tarefaService.buscarTarefasBanda(codigoBanda, paginacao));
+    }
+
     @PatchMapping("{id}")
     public ResponseEntity<?> concluirTarefa(@PathVariable("id") Long tarefaId) {
         return ResponseEntity.ok(tarefaService.concluirTarefa(tarefaId));

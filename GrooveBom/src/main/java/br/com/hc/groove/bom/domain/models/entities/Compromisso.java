@@ -38,11 +38,15 @@ public class Compromisso implements Comparable<Compromisso> {
     @Column(name = "is_concluido")
     private Boolean isConcluido;
 
+    @Column(name = "fk_codigo_banda")
+    private String codigoBanda;
+
     public Compromisso(CompromissoForm form) {
         this.isShow = form.isShow();
         this.descricao = form.descricao();
         this.data = form.data();
         this.idDestinatario = form.idDestinatario();
+        this.codigoBanda = form.codigoBanda();
     }
 
     @Override

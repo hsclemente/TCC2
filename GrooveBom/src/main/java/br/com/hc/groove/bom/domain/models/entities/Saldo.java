@@ -43,14 +43,22 @@ public class Saldo {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
+
+    @Column(name = "codigo_banda", nullable = false)
+    private String codigoBanda;
+
     @PrePersist
     void create() {
         this.data = LocalDateTime.now();
     }
 
-    public Saldo(SaldoForm saldoForm) {
+    public Saldo(SaldoForm saldoForm, Tipo tipo) {
         this.descricao = saldoForm.descricao();
         this.status = saldoForm.status();
+        this.tipo = tipo;
+        this.codigoBanda = saldoForm.codigoBanda();
         this.valor = BigDecimal.valueOf(saldoForm.valor()).setScale(2, RoundingMode.HALF_UP).doubleValue();
         this.idExterno = saldoForm.idExterno();
     }

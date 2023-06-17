@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SaldoRepository extends JpaRepository<Saldo, Long>{
     Page<Saldo> findAllByIdExterno(Long idExterno, Pageable pageable);
+    Page<Saldo> findAllByCodigoBanda(String codigoBanda, Pageable pageable);
 }

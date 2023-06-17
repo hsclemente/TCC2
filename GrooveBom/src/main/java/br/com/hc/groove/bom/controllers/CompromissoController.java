@@ -38,9 +38,23 @@ public class CompromissoController {
         return ResponseEntity.ok(compromissoService.buscarCompromissos(destinatarioId, pageSize, pageIndex));
     }
 
-    @GetMapping("compromisso/{destinatarioId}")
+    @GetMapping("/banda/{codigoBanda}")
+    public ResponseEntity<?> buscarCompromissos(
+            @PathVariable("codigoBanda") String codigoBanda,
+            @RequestParam(name = "page_size", defaultValue = "100", required = false) int pageSize,
+            @RequestParam(name = "page_index", defaultValue = "0", required = false) int pageIndex
+    ) {
+        return ResponseEntity.ok(compromissoService.buscarCompromissosBanda(codigoBanda, pageSize, pageIndex));
+    }
+
+    @GetMapping("grafico/{destinatarioId}")
     public ResponseEntity<?> buscarGraficos(@PathVariable("destinatarioId") Long destinatarioId){
         return ResponseEntity.ok(compromissoService.buscarGraficos(destinatarioId));
+    }
+
+    @GetMapping("grafico/banda/{codigoBanda}")
+    public ResponseEntity<?> buscarGraficosBanda(@PathVariable("codigoBanda") String codigoBanda){
+        return ResponseEntity.ok(compromissoService.buscarGraficosBanda(codigoBanda));
     }
 
     @PostMapping

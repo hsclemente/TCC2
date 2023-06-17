@@ -6,5 +6,5 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record TarefaForm(@NotBlank String titulo, @NotBlank String descricao, @NotNull LocalDate dataTarefa, @NotNull Long usuarioId) {
+public record TarefaForm(@NotBlank String titulo, @NotBlank String descricao, @NotNull LocalDate dataTarefa, Long usuarioId, String codigoBanda) {
 }

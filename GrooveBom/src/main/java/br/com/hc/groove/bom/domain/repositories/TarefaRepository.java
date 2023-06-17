@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
 
     Page<Tarefa> findByUsuarioId(Long usuarioId, Pageable pageable);
+    Page<Tarefa> findByCodigoBanda(String usuarioId, Pageable pageable);
 }

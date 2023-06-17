@@ -19,6 +19,8 @@ import br.com.hc.groove.bom.services.SaldoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/saldo")
 @SecurityRequirement(name = "bearer-key")
@@ -34,9 +36,22 @@ public class SaldoController {
         return ResponseEntity.ok(saldoService.buscarSaldos(idExterno, paginacao));
     }
 
+    @GetMapping("/banda/{codigoBanda}")
+    public ResponseEntity<?> buscarSaldosBanda(
+        @PageableDefault(size = 100, sort = {"data"}, direction = Sort.Direction.DESC) Pageable paginacao,
+        @PathVariable("codigoBanda") String idExterno) {
+        return ResponseEntity.ok(saldoService.buscarSaldosBanda(idExterno, paginacao));
+    }
+
     @PostMapping
     public ResponseEntity<?> criarSaldo(@RequestBody@Valid SaldoForm form, UriComponentsBuilder uriBuilder) {
         Long id = saldoService.criarSaldo(form);
+        return ResponseEntity.created(uriBuilder.path("/saldo/{id}").buildAndExpand(id).toUri()).body(id);
+    }
+
+    @PostMapping("banda")
+    public ResponseEntity<?> criarSaldoBanda(@RequestBody@Valid SaldoForm form, UriComponentsBuilder uriBuilder) {
+        Long id = saldoService.criarSaldoBanda(form);
         return ResponseEntity.created(uriBuilder.path("/saldo/{id}").buildAndExpand(id).toUri()).body(id);
     }
 }

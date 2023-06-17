@@ -59,30 +59,56 @@
                         <canvas id="myChart"></canvas>
                     </div>
                     <script>
-                        // Obtém o elemento canvas pelo id
-                        var ctx = document.getElementById('myChart').getContext('2d');
+                        document.addEventListener('DOMContentLoaded', function () {
+                            buscaGraficos();
+                        });
+
+                        function buscaGraficos() {
+                            fetch("http://localhost:8080/compromisso/grafico/" + localStorage.getItem('id'), {
+                                method: "GET",
+                                headers: {
+                                    "Content-type": "application/json; charset=UTF-8",
+                                    "Authorization": "Bearer " + localStorage.getItem('token')
+                                },
+                            }).then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    throw new Error();             
+                                }
+                            }).then(data => {
+                                mostrarGrafico(data.map(dto => dto.qtd));
+                            }).catch(err => {
+                                alert('Erro ao buscar compromissos')
+                            })
+                        }
                         
-                        // Cria o gráfico
-                        var myChart = new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'],
-                                datasets: [{
-                                    label: 'Shows Executados',
-                                    data: [6, 5, 2, 4, 3, 0, 0, 0, 0, 0, 0, 0],
-                                    backgroundColor: '#FF8C00', 
-                                    borderColor: '#FF8C00', 
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
+                        function mostrarGrafico(data) {
+                            // Obtém o elemento canvas pelo id
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            
+                            // Cria o gráfico
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'],
+                                    datasets: [{
+                                        label: 'Shows Executados',
+                                        data: data,
+                                        backgroundColor: '#FF8C00', 
+                                        borderColor: '#FF8C00', 
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
                     </script>
                     
                 </div>

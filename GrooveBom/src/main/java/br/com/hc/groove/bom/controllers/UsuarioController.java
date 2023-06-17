@@ -37,10 +37,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.removerBanda(usuarioId));
     }
 
-    @GetMapping("banda/{id}")
-    public ResponseEntity<?> buscarUsuariosDaBanda(@PathVariable("id") Long bandaId) {
-        return ResponseEntity.ok(usuarioService.buscarUsuariosDaBanda(bandaId));
-
+    @GetMapping("banda/{codigoBanda}")
+    public ResponseEntity<?> buscarUsuariosDaBanda(@PathVariable("codigoBanda") String codigoBanda) {
+        return ResponseEntity.ok(usuarioService.buscarUsuariosDaBanda(codigoBanda));
     }
 
     @GetMapping("{id}")

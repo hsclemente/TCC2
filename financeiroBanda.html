@@ -13,9 +13,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu TCC 2</title>
-
+    
     <script src="./js/main.js"></script>
-
     <style>
         .submit-popup-button {
             border: 1px solid black;
@@ -33,7 +32,7 @@
                 tbody.removeChild(tbody.firstChild);
             }
 
-            fetch("http://localhost:8080/saldo/" + localStorage.getItem('id'), {
+            fetch("http://localhost:8080/saldo/banda/" + localStorage.getItem('codigoBanda'), {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -43,10 +42,9 @@
                 return response.json();
             }).then(data => {
                 var saldo = 0;
-                // var list = Object.entries(data);
                 var list = Object.keys(data.content).map((chave) => {
                     var obj = data.content[chave]
-                    createLi(obj.status, obj.valor, obj.descricao)
+                    createLi(obj.status, obj.valor, obj.descricao, obj.usuario)
 
                     if (obj.status === 'ADICAO') {
                         saldo += obj.valor;
@@ -59,7 +57,7 @@
             })
         }
 
-        function createLi(status, valor, descricao) {
+        function createLi(status, valor, descricao, integrante) {
             var table = document.getElementById('tbody');
             const tr = document.createElement('tr');
 
@@ -71,10 +69,14 @@
             
             const td3 = document.createElement('td');
             td3.innerText = descricao;
+            
+            const td4 = document.createElement('td');
+            td4.innerText = integrante;
 
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
+            tr.appendChild(td4);
 
             table.appendChild(tr);
         }
@@ -143,21 +145,23 @@
                 }
 
                 closePopup();
-                fetch("http://localhost:8080/saldo", {
+                fetch("http://localhost:8080/saldo/banda", {
                     method: "POST",
                     body: JSON.stringify({
                         valor: valorMudarNum,
                         descricao: descricao,
                         idExterno: localStorage.getItem('id'),
-                        status: status
+                        status: status,
+                        codigoBanda: localStorage.getItem('codigoBanda')
                     }),
                     headers: {
                         "Content-type": "application/json; charset=UTF-8",
                         "Authorization": "Bearer " + localStorage.getItem('token')
                     },
-                }).then(data => {
-                    setUsuarioSaldo();
-                    cleanPopup();
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
                 });
             } catch (error) {
                 setPopupErrors('Formulário inválido.');
@@ -195,7 +199,7 @@
                     <div class="menu-lateral">
                         <ul class="list-unstyled">
                             <li><a href="integrantesBanda.html"><span>Integrantes</span></a></li>
-                            <li><a href="financeiroBanda.html"><span>Financeiro</span></a></li>
+                            <li><a href="financeiroBanda.html" style="font-weight: bold;"><span>Financeiro</span></a></li>
                             <li><a href="tarefasBanda.html"><span>Gestão de Tarefas</span></a></li>
                             <li><a href="compromissosBanda.html"><span>Gestão de Compromissos</span></a></li>
                         </ul>
@@ -205,13 +209,13 @@
                     <div class="conteudo-adm">
                         <div class="saldo-financeiro">
                             <h2>Saldo Financeiro da Banda</h2>
-                            <p>O saldo atual da banda é R$ <span id="usuarioSaldo">0,00</span></p>
-                            <div class="btn-saldo-wrap">
-                                <button class="btn-padrao" onclick="abrirPopupAdicionar()">Adicionar saldo</button>
-                                <button class="btn-padrao" onclick="abrirPopupRemover()">Remover saldo</button>
+                            <p>Saldo atual da banda é R$ <span id="usuarioSaldo">0,00</span></p>
+                            <div class="action-buttons">
+                                <button class="btn-padrao" onclick="abrirPopupAdicionar()">Incluir Valor</button>
+                                <button class="btn-padrao" onclick="abrirPopupRemover()">Remover Valor</button>
                             </div>
                         </div>
-                        <div class="conteudo-adm">
+                        <div class="conteudo-adm left">
                             <h2 class="titulo-operacoes">Operações</h2>
                             <table class="table">
                                 <thead>
@@ -219,6 +223,7 @@
                                         <th>Status Operação</th>
                                         <th>Valor</th>
                                         <th>Descrição</th>
+                                        <th>Integrante</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody">
@@ -233,7 +238,10 @@
 
     <div id="popupAdicionar" class="popup">
         <div class="popup-box text-center">
-            <h2 class="popup-title">Informe o saldo a adicionar:</h2>
+            <div class="w-100" style="text-align: right;">
+                <button class="submit-popup-button close-popup" onclick="closePopup()">X</button>
+            </div>
+            <h2 class="popup-title">Informe o valor a adicionar:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <div class="w-100 mb-2">
                     <label for="valor" class="float-left">Valor: </label>
@@ -250,7 +258,10 @@
 
     <div id="popupRemover" class="popup">
         <div class="popup-box text-center">
-            <h2 class="popup-title">Informe o saldo a remover:</h2>
+            <div class="w-100" style="text-align: right;">
+                <button class="submit-popup-button close-popup" onclick="closePopup()">X</button>
+            </div>
+            <h2 class="popup-title">Informe o valor a remover:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <div class="w-100 mb-2">
                     <label for="valor" class="float-left">Valor: </label>

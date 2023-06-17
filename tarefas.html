@@ -33,7 +33,7 @@
                     throw new Error();
                 }
             }).then(data => {
-                listarTarefas(data.content);
+                listarTarefas(data);
             }).catch(err => {
                 alert('Erro ao carregar Tarefas, tente novamente.')
             })

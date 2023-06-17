@@ -1,0 +1,204 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/slick.css">
+    <link rel="stylesheet" href="./css/slick-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu TCC 2</title>
+
+    <script src="./js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', carregarTarefas());
+
+
+        function carregarTarefas() {
+            fetch("http://localhost:8080/tarefa/banda/" + localStorage.getItem('codigoBanda'), {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error();
+                }
+            }).then(data => {
+                listarTarefas(data);
+            }).catch(err => {
+                alert('Erro ao carregar Tarefas, tente novamente.')
+            })
+        }
+
+        function adicionarTarefa() {
+            const inputTarefa = document.getElementById('input-tarefa').value;
+            const inputDescricao = document.getElementById('input-descricao').value;
+            const inputData = document.getElementById('input-data').value;
+
+            if (inputTarefa.trim() === '' || inputDescricao.trim() === '' || inputData.trim() === '') {
+                alert('Favor preencha os 3 campos do formulário');
+                return;
+            }
+
+            fetch("http://localhost:8080/tarefa", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+                body: JSON.stringify({
+                    titulo: inputTarefa,
+                    descricao: inputDescricao,
+                    dataTarefa: inputData,
+                    codigoBanda: localStorage.getItem('codigoBanda'),
+                }),
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(response.status);
+                }
+            }).then(data => {
+                location.reload();
+            }).catch(err => {
+                alert('Erro ao carregar Tarefas, tente novamente.')
+            })
+        }
+
+        function changeColor(id) {
+            fetch("http://localhost:8080/tarefa/" + id, {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
+                },
+            }).then(response => {
+                if (response.ok) {
+                    elemento = document.getElementsByClassName('tarefa-' + id)[0];
+                    elemento.classList.add('concluido');
+                    elemento.querySelector('input').checked = true;
+                } else {
+                    throw new Error(response.status);
+                }
+            }).catch(err => {
+                alert('Erro ao concluir tarefa')
+            })
+        }
+
+        function listarTarefas(tarefas) {
+            const listaTarefas = document.getElementById('lista-tarefas');
+
+            tarefas.forEach(element => {
+                const card = document.createElement('div');
+                card.classList.add('tarefa-card');
+                card.classList.add('tarefa-' + element.id);
+
+                const checkbox = document.createElement('div');
+                checkbox.classList.add('wrap-concluido');
+
+                const titulo = document.createElement('h3');
+                titulo.textContent = element.titulo;
+
+                const descricaoParagrafo = document.createElement('p');
+                descricaoParagrafo.textContent = element.descricao;
+
+                const dataParagrafo = document.createElement('p');
+                dataParagrafo.textContent = `Data: ${element.dataTarefa}`;
+
+                const marcarConcluido = document.createElement('input');
+                marcarConcluido.classList.add('change-tarefa-color');
+                marcarConcluido.setAttribute('type', 'checkbox');
+                marcarConcluido.setAttribute('id', 'check-concluido');
+                const label = document.createElement('label');
+                label.classList.add('label-concluido');
+                label.textContent = 'Marcar como concluído';
+
+                checkbox.appendChild(marcarConcluido);
+                checkbox.appendChild(label);
+                card.appendChild(titulo);
+                card.appendChild(descricaoParagrafo);
+                card.appendChild(dataParagrafo);
+                card.appendChild(checkbox);
+
+                listaTarefas.appendChild(card);
+
+                if (element.concluido) {
+                    marcarConcluido.checked = true;
+                    card.classList.add('concluido');
+                } else {
+                    checkbox.setAttribute('onclick', `changeColor(${element.id})`);
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <header class="menu-principal">
+        <div class="container">
+            <div class="header">
+                <div class="logo">
+                    <a href="perfil.html">
+                        <img src="./img/logo-grooveBom.png" />
+                    </a>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="perfil.html">Usuário</a></li>
+                        <li><a href="banda.html" style="color: black;">Banda</a></li>
+                    </ul>
+                </div>
+                <div class="logout">
+                    <a href="index.html" onclick="sair()">Sair<img src="./img/sair.png" alt=""></a>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <div class="tabela-financeiro">
+        <div class="container-fluid">
+            <div class="row no-gutters">
+                <div class="col-md-2">
+                    <div class="menu-lateral">
+                        <ul class="list-unstyled">
+                            <li><a href="integrantesBanda.html"><span>Integrantes</span></a></li>
+                            <li><a href="financeiroBanda.html"><span>Financeiro</span></a></li>
+                            <li><a href="tarefasBanda.html" style="font-weight: bold;"><span>Gestão de Tarefas</span></a></li>
+                            <li><a href="compromissosBanda.html"><span>Gestão de Compromissos</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="conteudo-adm">
+                        <div class="gestao-tarefas">
+                            <h1>Gestão de Tarefas</h1>
+                            <form id="form-tarefa">
+                                <label for="text">Título:</label>
+                                <input type="text" id="input-tarefa" placeholder="Digite uma nova tarefa" autofocus>
+                                <label for="text">Descrição:</label>
+                                <input type="text" id="input-descricao" placeholder="Descrição da Tarefa">
+                                <label for="date">Prazo Estimado:</label>
+                                <input type="date" id="input-data">
+                                <button type="button" onclick="adicionarTarefa()">Adicionar</button>
+                            </form>
+                            <div id="lista-tarefas">
+                                <!-- Tarefas adicionadas dinamicamente serão exibidas aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

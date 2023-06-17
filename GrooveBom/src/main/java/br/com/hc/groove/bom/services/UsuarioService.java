@@ -23,8 +23,8 @@ public class UsuarioService {
     @Autowired
     private BandaRepository bandaRepository;
         
-    public List<UsuarioDTO> buscarUsuariosDaBanda(Long bandaId) {
-        return usuarioRepository.findAllByBanda(bandaRepository.findById(bandaId).orElseThrow(EntityNotFoundException::new)).stream().map(UsuarioDTO::new).collect(Collectors.toList());
+    public List<UsuarioDTO> buscarUsuariosDaBanda(String codigoBanda) {
+        return usuarioRepository.findAllByBanda(bandaRepository.findByCodigoAcesso(codigoBanda).orElseThrow(EntityNotFoundException::new)).stream().map(UsuarioDTO::new).collect(Collectors.toList());
     }
 
     public UsuarioDTO buscarUsuario(Long usuarioId) {

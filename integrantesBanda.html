@@ -49,71 +49,40 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script>
-        function enviarForm() {
-            var formularioCorreto = true;
-            var inputEmail = document.getElementById('email').value;
-            var inputNome = document.getElementById('nome').value;
-            var inputDescricao = document.getElementById('descricao').value;
-            var inputEspecialidade = document.getElementById('especialidade').value;
-            var inputSenha = document.getElementById('senha').value;
-            var inputConfirmarSenha = document.getElementById('confirmar-senha').value;
+        document.addEventListener('DOMContentLoaded', carregarIntegrantes());
 
-
-            if (inputEmail.length == 0 || !inputEmail.includes('@') || inputEmail.endsWith("@")) {
-                formularioCorreto = false;
-                document.getElementById('ErrorEmail').textContent = 'E-mail inválido.';
-            } else {
-                document.getElementById('ErrorEmail').textContent = '';
-            }
-
-            if (inputNome.length == 0) {
-                formularioCorreto = false;
-                document.getElementById('ErrorNome').textContent = 'Nome inválido.';
-            } else {
-                document.getElementById('ErrorNome').textContent = '';
-            }
-
-            if (inputSenha.length < 6) {
-                formularioCorreto = false;
-                document.getElementById('ErrorSenha').textContent = 'Senha precisa ter mais que 5 caractéres.';
-            } else {
-                document.getElementById('ErrorSenha').textContent = '';
-            }
-
-            if (inputConfirmarSenha != inputSenha) {
-                formularioCorreto = false;
-                document.getElementById('ErrorConfirmSenha').textContent = 'As senhas não coincidem.';
-            } else {
-                document.getElementById('ErrorConfirmSenha').textContent = '';
-            }
-
-            if (!formularioCorreto) {
-                return;
-            }
-
-            fetch("http://localhost:8080/usuario", {
-                method: "POST",
-                body: JSON.stringify({
-                    email: inputEmail,
-                    password: inputSenha,
-                    nome: inputNome,
-                    descricao: inputDescricao,
-                    especialidade: inputEspecialidade
-                }),
+        function carregarIntegrantes() {
+            fetch("http://localhost:8080/usuario/banda/" + localStorage.getItem('codigoBanda'), {
+                method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
+                    "Authorization": "Bearer " + localStorage.getItem('token')
                 },
             }).then(response => {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    document.getElementById('ErrorForm').textContent = 'Erro ao enviar formulário.';
-                    throw new Error();
+                    throw new Error(response.status);
                 }
             }).then(data => {
-                window.location.href = './conectar.html';
+                apresentarUsuarios(data);
+            }).catch(err => {
+                alert('Erro ao carregar integrantes da banda.');
             })
         }
+
+        function apresentarUsuarios(data) {
+            var lista = document.getElementById('integrantes-lista');
+
+            data.forEach(element => {
+                const li = document.createElement('li');
+                li.classList.add('integrante');
+                li.innerText = element.nome;
+
+                lista.appendChild(li);
+            });
+        }
+
 
         function sairBanda() {
             fetch("http://localhost:8080/usuario/" + localStorage.getItem('id') + "/banda", {
@@ -145,6 +114,8 @@
     <div class="tela-login integrantes">
         <h1>Integrantes</h1>
         <!-- LISTAR OS INTEGRANTES DA BANDA -->
+        <ul id="integrantes-lista">
+        </ul>
         <div class="wrap-sair">
             <a class="sair-banda" data-toggle="modal" data-target="#exampleModal">
                 Sair da banda
