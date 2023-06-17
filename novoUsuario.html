@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="./js/main.js"></script>
     <title>Tela de Login</title>
     <style>
         body {
@@ -120,6 +122,24 @@
             window.location.href = './conectar.html';
         })
     }
+    
+    function togglePassword(eye) {
+        const password = document.querySelector('#senha');
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        eye.classList.toggle('fa-eye-slash');
+    }
+
+    function toggleConfirmPassword(eye) {
+        const password = document.querySelector('#confirmar-senha');
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        eye.classList.toggle('fa-eye-slash');
+    }
 </script>
 </head>
 <body>
@@ -144,11 +164,13 @@
         <input type="text" id="especialidade" name="especialidade" placeholder="Especialidade">
                  
         <input type="password" id="senha" name="senha" placeholder="Senha">
+        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="togglePassword(this)"></i>
         
         <small id="ErrorSenha" style="color: red;"></small>
                
         <input type="password" id="confirmar-senha" name="Confirmar-Senha" placeholder="Confirmar Senha">
-        
+        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="toggleConfirmPassword(this)"></i>
+
         <small id="ErrorConfirmSenha" style="color: red;"></small>
         <br>
         <button onclick="enviarForm()">Enviar</button>

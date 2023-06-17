@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="./js/main.js"></script>
     <title>Tela de Login</title>
     <script>
         function enviarForm() {
@@ -35,6 +37,15 @@
                 window.location.href = './perfil.html';
             })
         }
+
+        function togglePassword(eye) {
+            const password = document.querySelector('#password');
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            eye.classList.toggle('fa-eye-slash');
+        }
     </script>
 
 </head>
@@ -55,6 +66,7 @@
             <input type="text" placeholder="E-mail" id="username">
             <br><br>
             <input type="password" placeholder="Senha" id="password">
+            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; margin-top: 10px; cursor: pointer; color: white;" onclick="togglePassword(this)"></i>
             <small id="Error" class="error"></small>
             <button class="btn-padrao login" onclick="enviarForm()">Enviar</button>
             <br><br>

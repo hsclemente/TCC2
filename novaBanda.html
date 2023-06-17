@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
     <title>Criar Nova Banda</title>
     <style>
         body {
@@ -97,6 +99,25 @@
             }
         })
     }
+
+
+    function togglePassword(eye) {
+        const password = document.querySelector('#codigo');
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        eye.classList.toggle('fa-eye-slash');
+    }
+
+    function toggleConfirmPassword(eye) {
+        const password = document.querySelector('#confirmar-codigo');
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        eye.classList.toggle('fa-eye-slash');
+    }
 </script>
 </head>
 <body>
@@ -113,10 +134,12 @@
         <small id="erro-nome" style="color: red;"></small>
                  
         <input type="password" id="codigo" name="codigo" placeholder="Código de Acesso" class="w-100 input-login">
+        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="togglePassword(this)"></i>
         
         <small id="erro-codigo" style="color: red;"></small>
                
         <input type="password" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso" class="w-100 input-login">
+        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="toggleConfirmPassword(this)"></i>
         
         <small id="erro-confirmar-codigo" style="color: red;"></small>
         <br>

@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>Acessar Banda Existente</title>
     <style>
         body {
@@ -97,6 +98,24 @@
             document.getElementById('codigo').value = '';
             document.getElementById('confirmar-codigo').value = '';
         }
+
+        function togglePassword(eye) {
+        const password = document.querySelector('#codigo');
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        eye.classList.toggle('fa-eye-slash');
+    }
+
+    function toggleConfirmPassword(eye) {
+        const password = document.querySelector('#confirmar-codigo');
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        eye.classList.toggle('fa-eye-slash');
+    }
     </script>
 </head>
 
@@ -111,11 +130,13 @@
             <h1>Acessar Banda</h1>
 
             <input type="password" class="input-acessarBanda" id="codigo" name="codigo" placeholder="Código de Acesso">
+            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="togglePassword(this)"></i>
 
             <small id="codigo-error" style="color: red;"></small>
 
             <input type="password" class="input-acessarBanda" id="confirmar-codigo" name="confirmar-codigo"
                 placeholder="Confirmar Código de Acesso">
+            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="toggleConfirmPassword(this)"></i>
 
             <small id="confirmar-codigo-error" style="color: red;"></small>
             <br>
