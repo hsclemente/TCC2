@@ -14,8 +14,6 @@
             background-image: linear-gradient(45deg, orange, darkorange);
         }
 
-       
-
         input {
             padding: 15px;
             border: none;
@@ -108,21 +106,23 @@
             <img src="./img/logo-grooveBom.png" alt="Voltar">
         </a>
     </div>
-    <div class="tela-login acessar-banda">
-        <h1>Acessar Banda</h1>
+    <div class="container mt-5">
+        <div class="tela-login acessar-banda">
+            <h1>Acessar Banda</h1>
 
-        <input type="password" id="codigo" name="codigo" placeholder="Código de Acesso">
+            <input type="password" class="input-acessarBanda" id="codigo" name="codigo" placeholder="Código de Acesso">
 
-        <small id="codigo-error" style="color: red;"></small>
+            <small id="codigo-error" style="color: red;"></small>
 
-        <input type="password" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso">
+            <input type="password" class="input-acessarBanda" id="confirmar-codigo" name="confirmar-codigo"
+                placeholder="Confirmar Código de Acesso">
 
-        <small id="confirmar-codigo-error" style="color: red;"></small>
-        <br>
-        <button onclick="adicionarUsuarioNaBanda()">Enviar</button>
-        <br><br>
-        <small id="ErrorForm" style="color: red;"></small>
-
+            <small id="confirmar-codigo-error" style="color: red;"></small>
+            <br>
+            <button onclick="adicionarUsuarioNaBanda()">Enviar</button>
+            <br><br>
+            <small id="ErrorForm" style="color: red;"></small>
+        </div>
     </div>
 </body>
 

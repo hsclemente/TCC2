@@ -26,6 +26,21 @@ input {
     font-size: 15px;
 }
 
+@media only screen and (max-width: 500px){
+    input{
+        font-size: 15px;
+        width: auto;
+
+        padding: 15px 25px;
+    }
+    .tela-login {
+        position: unset;
+        transform: unset;
+        padding: 30px 45px;
+        margin: 20px;
+    }
+}
+
 .btn-voltar {
     text-align: start;
     margin: 25px 0 0 25px;
@@ -65,4 +80,10 @@ input {
     color: red;
     margin: 10px 0;
     display: block;
+}
+
+@media only screen and (max-width:500px) {
+    .input-acessarBanda {
+        width: 250px !important;
+    }
 }

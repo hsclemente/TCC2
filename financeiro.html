@@ -193,7 +193,7 @@
                 <div class="col-md-2">
                     <div class="menu-lateral">
                         <ul class="list-unstyled">
-                            <li><a href="financeiro.html"><span>Financeiro</span></a></li>
+                            <li><a href="financeiro.html" style="font-weight: bold;"><span>Financeiro</span></a></li>
                             <li><a href="tarefas.html"><span>Gestão de Tarefas</span></a></li>
                             <li><a href="compromissos.html"><span>Gestão de Compromissos</span></a></li>
                             <li><a href="faq.html"><span>FAQ</span></a></li>
@@ -206,11 +206,11 @@
                             <h2>Saldo Financeiro</h2>
                             <p>Seu saldo atual é R$ <span id="usuarioSaldo">0,00</span></p>
                             <div class="action-buttons">
-                                <button class="btn-padrao" onclick="abrirPopupAdicionar()">Adicionar saldo</button>
-                                <button class="btn-padrao" onclick="abrirPopupRemover()">Remover saldo</button>
+                                <button class="btn-padrao" onclick="abrirPopupAdicionar()">Incluir Valor</button>
+                                <button class="btn-padrao" onclick="abrirPopupRemover()">Remover Valor</button>
                             </div>
                         </div>
-                        <div class="conteudo-adm">
+                        <div class="conteudo-adm left">
                             <h2 class="titulo-operacoes">Operações</h2>
                             <table class="table">
                                 <thead>
@@ -232,7 +232,7 @@
 
     <div id="popupAdicionar" class="popup">
         <div class="popup-box text-center">
-            <h2 class="popup-title">Informe o saldo a adicionar:</h2>
+            <h2 class="popup-title">Informe o valor a adicionar:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <div class="w-100 mb-2">
                     <label for="valor" class="float-left">Valor: </label>
@@ -249,7 +249,7 @@
 
     <div id="popupRemover" class="popup">
         <div class="popup-box text-center">
-            <h2 class="popup-title">Informe o saldo a remover:</h2>
+            <h2 class="popup-title">Informe o valor a remover:</h2>
             <form style="margin-bottom: 0;" onsubmit="event.preventDefault()">
                 <div class="w-100 mb-2">
                     <label for="valor" class="float-left">Valor: </label>

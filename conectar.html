@@ -26,7 +26,7 @@
                 if (response.ok) {
                     return response.json();
                 } else {
-                    document.getElementById('Error').textContent='Usuário ou senha inválido.';             
+                    document.getElementById('Error').textContent = 'Usuário ou senha inválido.';
                 }
             }).then(data => {
                 localStorage.setItem('token', data.token);
@@ -38,6 +38,7 @@
     </script>
 
 </head>
+
 <body>
     <!-- <div class="btn-voltar">
         <button class="voltar" onclick="window.history.back()">Voltar</button>
@@ -48,17 +49,20 @@
         </a>
     </div>
 
-    <div class="tela-login">
-        <h1>Login</h1>
-        <input type="text" placeholder="E-mail" id="username">
-        <br><br>
-        <input type="password" placeholder="Senha" id="password">
-        <small id="Error" class="error"></small>
-        <button class="btn-padrao login" onclick="enviarForm()">Enviar</button>
-        <br><br>
-        <button class="btn-padrao login" onclick="window.location.href='novoUsuario.html'">Criar Novo Usuário</button>
-        <div class="forgot-password">
-            <a href="">Esqueci minha senha</a>
+    <div class="container mt-5">
+        <div class="tela-login">
+            <h1>Login</h1>
+            <input type="text" placeholder="E-mail" id="username">
+            <br><br>
+            <input type="password" placeholder="Senha" id="password">
+            <small id="Error" class="error"></small>
+            <button class="btn-padrao login" onclick="enviarForm()">Enviar</button>
+            <br><br>
+            <button class="btn-padrao login" onclick="window.location.href='novoUsuario.html'">Criar Novo
+                Usuário</button>
+            <div class="forgot-password">
+                <a href="">Esqueci minha senha</a>
+            </div>
         </div>
     </div>
 </body>
