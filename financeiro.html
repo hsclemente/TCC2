@@ -32,7 +32,7 @@
                 tbody.removeChild(tbody.firstChild);
             }
 
-            fetch("http://localhost:8080/saldo/" + localStorage.getItem('id'), {
+            fetch("https://tcc2-production.up.railway.app/saldo/" + localStorage.getItem('id'), {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -142,7 +142,7 @@
                 }
 
                 closePopup();
-                fetch("http://localhost:8080/saldo", {
+                fetch("https://tcc2-production.up.railway.app/saldo", {
                     method: "POST",
                     body: JSON.stringify({
                         valor: valorMudarNum,

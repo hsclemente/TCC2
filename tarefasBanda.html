@@ -20,7 +20,7 @@
 
 
         function carregarTarefas() {
-            fetch("http://localhost:8080/tarefa/banda/" + localStorage.getItem('codigoBanda'), {
+            fetch("https://tcc2-production.up.railway.app/tarefa/banda/" + localStorage.getItem('codigoBanda'), {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -49,7 +49,7 @@
                 return;
             }
 
-            fetch("http://localhost:8080/tarefa", {
+            fetch("https://tcc2-production.up.railway.app/tarefa", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -75,7 +75,7 @@
         }
 
         function changeColor(id) {
-            fetch("http://localhost:8080/tarefa/" + id, {
+            fetch("https://tcc2-production.up.railway.app/tarefa/" + id, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",

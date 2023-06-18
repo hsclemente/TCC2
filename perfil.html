@@ -64,7 +64,7 @@
                         });
 
                         function buscaGraficos() {
-                            fetch("http://localhost:8080/compromisso/grafico/" + localStorage.getItem('id'), {
+                            fetch("https://tcc2-production.up.railway.app/compromisso/grafico/" + localStorage.getItem('id'), {
                                 method: "GET",
                                 headers: {
                                     "Content-type": "application/json; charset=UTF-8",

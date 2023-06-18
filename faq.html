@@ -23,7 +23,7 @@
         });
 
         function carregarFaq() {
-            fetch("http://localhost:8080/faq", {
+            fetch("https://tcc2-production.up.railway.app/faq", {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -141,7 +141,7 @@
 
             document.getElementById('comentario').value = '';
 
-            fetch("http://localhost:8080/faq", {
+            fetch("https://tcc2-production.up.railway.app/faq", {
                 method: "POST",
                 body: JSON.stringify({
                     pergunta: comentario,
@@ -200,7 +200,7 @@
                 return;
             }
 
-            fetch("http://localhost:8080/faq/responder/" + id , {
+            fetch("https://tcc2-production.up.railway.app/faq/responder/" + id , {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",

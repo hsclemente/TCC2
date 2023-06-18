@@ -76,7 +76,7 @@
                         });
 
                         function buscaGraficos() {
-                            fetch("http://localhost:8080/compromisso/grafico/banda/" + localStorage.getItem('codigoBanda'), {
+                            fetch("https://tcc2-production.up.railway.app/compromisso/grafico/banda/" + localStorage.getItem('codigoBanda'), {
                                 method: "GET",
                                 headers: {
                                     "Content-type": "application/json; charset=UTF-8",
