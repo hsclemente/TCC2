@@ -982,3 +982,16 @@ button:focus {
     background: none;
     font-weight: 800;
 }
+
+.visual-senha{
+    position: relative;
+}
+
+.fa-eye {
+    cursor: pointer;
+    color: black;
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    z-index: 10;
+}

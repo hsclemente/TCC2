@@ -122,7 +122,7 @@
 </head>
 <body>
     <div class="btn-voltar">
-        <a href="#" onclick="window.location.href = './banda.html'">
+        <a href="#" onclick="window.location.href = './perfil.html'">
             <img src="./img/logo-grooveBom.png" alt="Voltar">
         </a>
     </div>
@@ -132,15 +132,19 @@
         <input type="text" id="nome" name="nome" placeholder="Nome da Banda" class="w-100 input-login" autofocus>
         
         <small id="erro-nome" style="color: red;"></small>
-                 
+        
+        <div class="visual-senha">
         <input type="password" id="codigo" name="codigo" placeholder="Código de Acesso" class="w-100 input-login">
-        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="togglePassword(this)"></i>
-        
+        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: black;" onclick="togglePassword(this)"></i>
+        </div>
+
         <small id="erro-codigo" style="color: red;"></small>
-               
-        <input type="password" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso" class="w-100 input-login">
-        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="toggleConfirmPassword(this)"></i>
         
+        <div class="visual-senha">
+        <input type="password" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso" class="w-100 input-login">
+        <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: black;" onclick="toggleConfirmPassword(this)"></i>
+        </div>
+
         <small id="erro-confirmar-codigo" style="color: red;"></small>
         <br>
         <button onclick="enviarForm()" class="botao-login-banda" style="display: inline-block; cursor: pointer;">Enviar</button>

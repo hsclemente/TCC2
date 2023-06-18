@@ -128,15 +128,18 @@
     <div class="container mt-5">
         <div class="tela-login acessar-banda">
             <h1>Acessar Banda</h1>
-
+            
+            <div class="visual-senha">
             <input type="password" class="input-acessarBanda" id="codigo" name="codigo" placeholder="Código de Acesso">
-            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="togglePassword(this)"></i>
+            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: black;" onclick="togglePassword(this)"></i>
+            </div>
 
             <small id="codigo-error" style="color: red;"></small>
 
-            <input type="password" class="input-acessarBanda" id="confirmar-codigo" name="confirmar-codigo"
-                placeholder="Confirmar Código de Acesso">
-            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: white;" onclick="toggleConfirmPassword(this)"></i>
+            <div class="visual-senha">
+            <input type="password" class="input-acessarBanda" id="confirmar-codigo" name="confirmar-codigo" placeholder="Confirmar Código de Acesso">
+            <i class="far fa-eye" id="togglePassword" style="margin-left: 90%; cursor: pointer; color: black;" onclick="toggleConfirmPassword(this)"></i>
+            </div>
 
             <small id="confirmar-codigo-error" style="color: red;"></small>
             <br>
