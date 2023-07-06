@@ -20,7 +20,7 @@
 
 
         function carregarTarefas() {
-            fetch("https://tcc2-production.up.railway.app/tarefa/" + localStorage.getItem('id'), {
+            fetch("https://aberrant-wilderness-production.up.railway.app/tarefa/" + localStorage.getItem('id'), {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -49,7 +49,7 @@
                 return;
             }
 
-            fetch("https://tcc2-production.up.railway.app/tarefa", {
+            fetch("https://aberrant-wilderness-production.up.railway.app/tarefa", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -75,7 +75,7 @@
         }
 
         function changeColor(id) {
-            fetch("https://tcc2-production.up.railway.app/tarefa/" + id, {
+            fetch("https://aberrant-wilderness-production.up.railway.app/tarefa/" + id, {
                 method: "PATCH",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",

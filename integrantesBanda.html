@@ -52,7 +52,7 @@
         document.addEventListener('DOMContentLoaded', carregarIntegrantes());
 
         function carregarIntegrantes() {
-            fetch("https://tcc2-production.up.railway.app/usuario/banda/" + localStorage.getItem('codigoBanda'), {
+            fetch("https://aberrant-wilderness-production.up.railway.app/usuario/banda/" + localStorage.getItem('codigoBanda'), {
                 method: "GET",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
@@ -85,7 +85,7 @@
 
 
         function sairBanda() {
-            fetch("https://tcc2-production.up.railway.app/usuario/" + localStorage.getItem('id') + "/banda", {
+            fetch("https://aberrant-wilderness-production.up.railway.app/usuario/" + localStorage.getItem('id') + "/banda", {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
